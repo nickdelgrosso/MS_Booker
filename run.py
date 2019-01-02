@@ -24,8 +24,11 @@ for key, value in options.items():
 		options[key] = value.replace('_', r'\_')
 
 
+template_file = 'templates/card_template.tex'
+template = latex.get_latex_template(template_file)
+
 build_d, out_file = 'output', 'card_built.tex'
-renderer_template = latex.template.render(**options)
+renderer_template = template.render(**options)
 latex.write(renderer_template, filename=out_file, directory=build_d)
 latex.pdflatex(out_file, output_dir=build_d)
 

@@ -7,23 +7,21 @@ modified from http://eosrei.net/articles/2015/11/latex-templates-python-and-jinj
 import os
 import jinja2
 
-latex_jinja_env = jinja2.Environment(
-    block_start_string='\BLOCK{',
-    block_end_string='}',
-    variable_start_string='\VAR{',
-    variable_end_string='}',
-    comment_start_string='\#{',
-    comment_end_string='}',
-    line_statement_prefix='%%',
-    line_comment_prefix='%#',
-    trim_blocks=True,
-    autoescape=False,
-    loader=jinja2.FileSystemLoader(os.path.abspath('.'))
-)
-
-
-template_file = 'templates/card_template.tex'
-template = latex_jinja_env.get_template(template_file)
+def get_latex_template(tex_filename):
+    env = jinja2.Environment(
+        block_start_string='\BLOCK{',
+        block_end_string='}',
+        variable_start_string='\VAR{',
+        variable_end_string='}',
+        comment_start_string='\#{',
+        comment_end_string='}',
+        line_statement_prefix='%%',
+        line_comment_prefix='%#',
+        trim_blocks=True,
+        autoescape=False,
+        loader=jinja2.FileSystemLoader(os.path.abspath('.'))
+    )
+    return env.get_template(tex_filename)
 
 
 def write(template, filename, directory='output'):
