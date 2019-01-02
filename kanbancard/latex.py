@@ -34,3 +34,11 @@ def write(template, filename, directory='output'):
 
 def pdflatex(tex_filename, output_dir='.'):
     os.system(r'pdflatex -output-directory {dir} {dir}/{file}'.format(dir=output_dir, file=tex_filename))
+
+
+def render_to_pdf(tex_filename, ouput_filename, output_dir, options):
+    """Do full rendering pipeline, passing options dict to the jinja2 latex template and building with pdflatex."""
+    template = get_latex_template(tex_filename)
+    renderer_template = template.render(**options)
+    write(renderer_template, filename=ouput_filename, directory=output_dir)
+    pdflatex(ouput_filename, output_dir=output_dir)

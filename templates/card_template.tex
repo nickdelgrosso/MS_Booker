@@ -32,9 +32,9 @@
 	\rule{\textwidth}{.3mm}\\
 
     \noindent\textbf{\Huge{\VAR{ProjectName}}}\\
-    \Large{\VAR{Researcher} \hfill \VAR{ProjectID} - \textbf{Batch \VAR{BatchID}}}\\
+    \Large{\VAR{df['Researcher'][0]} \hfill \VAR{df['Project ID'][0].replace('_', '\\_')} - \textbf{Batch \VAR{BatchID}}}\\
     \rule{\textwidth}{.3mm}\\
-    \normalsize{\textbf{Queue:} \VAR{Filename}}
+    \normalsize{\textbf{Queue:} \VAR{Filename.replace('_', '\\_')}}
 	\vspace{3mm}
 
 %    \hspace{1mm}
@@ -47,7 +47,7 @@
 					{\color{gray}Tip Box} & \hfill{} & \hfill{}\\
 	        		\BLOCK{for Key, Value in Comment.items()}
 		        		\hline
-		            	{\color{gray}\VAR{Key}} & \VAR{Value} & \hfill{}\\
+		            	{\color{gray}\VAR{Key.replace('_', '\\_')}} & \VAR{Value.replace('_', '\\_')} & \hfill{}\\
 	            	\BLOCK{endfor}
 	            \hline
             \end{tabular}

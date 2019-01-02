@@ -1,46 +1,30 @@
 from os import path
 from datetime import datetime
 import pandas as pd
-from kanbancard import latex
-
-
-options = {
-	'ProjectName': 'NJJF Rab10 Occupancy',
-	'BatchID': 1,
-	'Date': datetime.now().strftime('%d.%m.%Y'),
-}
+from kanbancard import latex, extract_comments, check_for_nonunique_columns
 
 data_filename = 'data/test.csv'
-options['Filename'] = path.basename(data_filename)
-
-
-df = pd.read_csv(data_filename, skiprows=[0])
-df.columns = [col[3:] if col[0] == 'L' and col[1].isdigit() else col.replace(' ', '') for col in df.columns]
-
-for col in ['ProjectID', 'Researcher']:
-	assert df[col].nunique() == 1
-	options[col] = df.iloc[0][col]
-options['df'] = df
-
-assert df['Comment'].nunique() == 1
-comments = {}
-for comment in df.iloc[0]['Comment'].split(','):
-	key, val = comment.split(':')
-	comments[key.lstrip().rstrip()] = val.lstrip().rstrip()
-options['Comment'] = comments
-
-for key, value in options.items():
-	if isinstance(value, str):
-		options[key] = value.replace('_', r'\_')
-
 template_file = 'templates/card_template.tex'
-template = latex.get_latex_template(template_file)
+build_d  = 'output'
+out_file = 'card_built.tex'
+project_name = 'NJJF Rab10 Occupancy'
 
-build_d, out_file = 'output', 'card_built.tex'
-renderer_template = template.render(**options)
-latex.write(renderer_template, filename=out_file, directory=build_d)
-latex.pdflatex(out_file, output_dir=build_d)
+# Read / Validate CSV Sequence File
+df = pd.read_csv(data_filename, skiprows=[0])
+df.columns = [col[3:] if col[0] == 'L' else col for col in df.columns]
+check_for_nonunique_columns(df, columns=['Project ID', 'Researcher', 'Comment'])
 
-#
-#
-#
+
+# Render to PDF Card via Latex
+options = {
+	'ProjectName': project_name,
+	'BatchID': 1,
+	'Date': datetime.now().strftime('%d.%m.%Y'),
+	'Filename': path.basename(data_filename),
+	'df': df,
+	'Comment': extract_comments(df['Comment'][0]),
+}
+
+
+
+latex.render_to_pdf(template_file, ouput_filename=out_file, output_dir=build_d, options=options)
