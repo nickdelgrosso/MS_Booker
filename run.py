@@ -26,5 +26,4 @@ options = {
 }
 
 
-
 latex.render_to_pdf(template_file, ouput_filename=out_file, output_dir=build_d, options=options)

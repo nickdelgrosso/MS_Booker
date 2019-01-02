@@ -74,11 +74,8 @@
 	    \end{minipage}
 	    	\vspace{1mm} \\
     \end{minipage}
-    
-    	\begin{flushright}
-	    	\textbf{\VAR{df|length} Samples}
-	\end{flushright}
 
+	\noindent\begin{minipage}[t]{0.8\textwidth}
 	\BLOCK{for name, row in df.iterrows()}
 	    \noindent\tikz\filldraw
 			\BLOCK{if row.SampleType == "QC"}
@@ -89,11 +86,14 @@
 [fill=white!40!white, draw=black]
 			\BLOCK{endif}
 rectangle (0.8cm,1.1em) node[pos=.5] {\VAR{row.Position}};
-		\BLOCK{if loop.index % 20 == 0}
+		\BLOCK{if loop.index % 15 == 0}
 			\vspace{1.5mm}\\
 		\BLOCK{endif}
     \BLOCK{endfor}
-    
+    \end{minipage}
+	\begin{minipage}[c]{0.15\textwidth}
+		\textbf{\VAR{df|length} Samples}
+	\end{minipage}
         
 	
 	
