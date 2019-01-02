@@ -1,5 +1,5 @@
-
-
+from os import path
+import pandas as pd
 from kanbancard import latex
 
 
@@ -24,6 +24,19 @@ for key, value in options.items():
 		options[key] = value.replace('_', r'\_')
 
 
+data_filename = 'data/test.csv'
+options['Filename'] = path.basename(data_filename)
+
+
+df = pd.read_csv(data_filename, skiprows=[0])
+df.columns = [col[3:] if col[0] == 'L' and col[1].isdigit() else col.replace(' ', '') for col in df.columns]
+for col in ['ProjectID', 'Researcher']:
+	assert df[col].nunique() == 1
+	options[col] = df.iloc[0][col]
+
+
+options['df'] = df
+
 template_file = 'templates/card_template.tex'
 template = latex.get_latex_template(template_file)
 
@@ -32,6 +45,6 @@ renderer_template = template.render(**options)
 latex.write(renderer_template, filename=out_file, directory=build_d)
 latex.pdflatex(out_file, output_dir=build_d)
 
-
-
-
+#
+#
+#

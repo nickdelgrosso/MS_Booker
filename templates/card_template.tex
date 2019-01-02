@@ -35,8 +35,6 @@
     \Large{\VAR{Researcher} \hfill \VAR{ProjectID} - \textbf{Batch \VAR{BatchID}}}\\
     \rule{\textwidth}{.3mm}\\
     \normalsize{\textbf{Queue:} \VAR{Filename}}
-    \hfill 
-    \textbf{Tip Box:} OES\_12B 
 	\vspace{3mm}
 
 %    \hspace{1mm}
@@ -45,6 +43,8 @@
 		    \strut\vspace*{-\baselineskip}\newline
 	        {\normalsize
 	        	\begin{tabular}{| r p{3cm} | p{1cm} |}
+					\hline
+					{\color{gray}Tip Box} & \hfill{} & \hfill{}\\
 	        		\BLOCK{for Key, Value in Comments.items()}
 		        		\hline
 		            	{\color{gray}\VAR{Key}} & \VAR{Value} & \hfill{}\\
@@ -55,20 +55,20 @@
 	    \end{minipage}
 	    \begin{minipage}[]{0.35\textwidth}
 		    \strut\vspace*{-\baselineskip}\newline
-	    	    \center{\Large\color{lightgray}Notes}
+	    	    \center{\Large\color{gray}Notes}
 	    \end{minipage}    
 	    \begin{minipage}[t]{0.15\textwidth}
 	    		\small
 		    \strut\vspace*{-\baselineskip}\newline
 	    		\begin{tabular}{|p{\textwidth}|}
 	    		 \hline
-	    		 {\color{lightgray}Date Created}\\
+	    		 {\color{gray}Date Created}\\
 	    		 \hline    		 
-	    		 {\color{lightgray}Date Queued}\\
+	    		 {\color{gray}Date Queued}\\
 	    		 \hline
-	    		 {\color{lightgray}Date Started}\\
+	    		 {\color{gray}Date Started}\\
 	    		 \hline
-	    		 {\color{lightgray}Date Done}\\    		     		 
+	    		 {\color{gray}Date Done}\\
 	    		 \hline
 	    		\end{tabular}\\
 	    \end{minipage}
@@ -76,11 +76,22 @@
     \end{minipage}
     
     	\begin{flushright}
-	    	\textbf{\VAR{rows|length} Samples x 45 Min.}
-	\end{flushright}   
-	
-	\BLOCK{for row in rows}
-	    \tikz\filldraw[fill=\VAR{'white' if loop.index < rows|length - 1 else 'orange'}!40!white, draw=black] rectangle (0.8cm,2ex);
+	    	\textbf{\VAR{df|length} Samples}
+	\end{flushright}
+
+	\BLOCK{for name, row in df.iterrows()}
+	    \noindent\tikz\filldraw
+			\BLOCK{if row.SampleType == "QC"}
+[fill=gray!40!white, draw=black]
+			\BLOCK{elif loop.index > df|length - 5}
+[fill=orange!40!white, draw=black]
+			\BLOCK{else}
+[fill=white!40!white, draw=black]
+			\BLOCK{endif}
+rectangle (0.8cm,1.1em) node[pos=.5] {\VAR{row.Position}};
+		\BLOCK{if loop.index % 20 == 0}
+			\vspace{1.5mm}\\
+		\BLOCK{endif}
     \BLOCK{endfor}
     
         
