@@ -1,4 +1,5 @@
 from os import path
+from datetime import datetime
 import pandas as pd
 from kanbancard import latex
 
@@ -6,6 +7,7 @@ from kanbancard import latex
 options = {
 	'ProjectName': 'NJJF Rab10 Occupancy',
 	'BatchID': 1,
+	'Date': datetime.now().strftime('%d.%m.%Y'),
 }
 
 data_filename = 'data/test.csv'
