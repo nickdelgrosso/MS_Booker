@@ -1,6 +1,7 @@
 """
 Latex templating code, templated with Jinja2 and rendered with pdflatex.
 """
+import sys
 import jinja2
 import subprocess
 import tempfile
@@ -39,8 +40,9 @@ def pdflatex(tex):
     Returns the pdf bytestring from pdflatex's rendering of the 'tex' string.
     (Auxillary files are stored in temporary directory and deleted.)
     """
+    shell = True if sys.platform == 'linux' else False
     with tempfile.TemporaryDirectory() as output_dir:
-        subprocess.run(r'pdflatex -output-directory {dir}'.format(dir=output_dir), input=tex.encode())
+        subprocess.run(r'pdflatex -output-directory {dir}'.format(dir=output_dir), input=tex.encode(), shell=shell)
         with open(path.join(output_dir, 'texput.pdf'), 'rb') as f:
             pdf = f.read()
             return pdf
