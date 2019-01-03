@@ -6,6 +6,8 @@ modified from http://eosrei.net/articles/2015/11/latex-templates-python-and-jinj
 
 import os
 import jinja2
+from os import path
+import subprocess
 
 def get_latex_template(tex_filename):
     env = jinja2.Environment(
@@ -32,8 +34,9 @@ def write(template, filename, directory='output2'):
         f.write(template)
 
 
-def pdflatex(tex_filename, output_dir='.'):
-    os.system(r'pdflatex -output-directory {dir} {dir}/{file}'.format(dir=output_dir, file=tex_filename))
+def pdflatex(tex, output_dir='.'):
+    with open(path.join(output_dir, tex_filename)) as f:
+        subprocess.call(r'pdflatex -output-directory {dir}'.format(dir=output_dir), stdin=f)
 
 
 def render_to_pdf(tex_filename, ouput_filename, output_dir, options):
