@@ -8,22 +8,21 @@ from io import StringIO, BytesIO
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
 	return render_template('landing.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-	if request.method == 'POST':
-		filename, csv_data = request.files['csv'].filename, request.files['csv'].read()
-		pdf = generate_pdf(data_filename=filename, csv_data=csv_data)
-		response = make_response(pdf)
-		response.headers['Content-Disposition'] = "inline; filename='booking.pdf"
-		response.mimetype = 'application/pdf'
-		return response
+	# if request.method == 'GET':
+	# 	red
+	filename, csv_data = request.files['csv'].filename, request.files['csv'].read()
+	pdf = generate_pdf(data_filename=filename, csv_data=csv_data)
+	response = make_response(pdf)
+	response.headers['Content-Disposition'] = "inline; filename='booking.pdf"
+	response.mimetype = 'application/pdf'
+	return response
 
-	else:
-		return 'not validated'
 
 
 def generate_pdf(data_filename, csv_data, project_name='NJJF Rab10 Occupancy', template_file='templates/card_template.tex'):
