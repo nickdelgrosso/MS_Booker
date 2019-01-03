@@ -24,6 +24,6 @@ options = {
 	'df': df,
 	'Comment': extract_comments(df['Comment'][0]),
 }
-
-
-latex.render_to_pdf(template_file, ouput_filename=out_file, output_dir=build_d, options=options)
+with open(template_file) as f:
+	tex = latex.render_templated_tex(tex=f.read(), **options)
+latex.pdflatex(tex=tex, output_dir=build_d)
