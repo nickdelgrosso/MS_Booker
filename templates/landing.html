@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <section class="hero is-info is-fullheight">
+    <section class="hero is-fullheight">
         <div class="hero-head">
             <nav class="navbar">
                 <div class="container">
@@ -40,21 +40,21 @@
 
         <div class="hero-body">
             <div class="container has-text-centered">
-                <div class="column is-6 is-offset-3">
+                <div class="column">
                     <h1 class="title">
                         Mass Spec Booking, Simplified.
                     </h1>
                     <h2 class="subtitle">
-                        Submit a sample batch sequence, get a booking slot.
+                        Submit a sequence, get a booking slot.
                     </h2>
 
-                    <form action="/" method="POST" enctype="multipart/form-data">
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
 
                         <div class="field is-grouped is-grouped-centered">
                             <p class="control">
                                 <div class="file is-primary">
                                   <label class="file-label">
-                                    <input class="file-input" type="file" name="csv">
+                                    <input class="file-input" type="file" name="csv" oninput="changeSubmit()">
                                     <span class="file-cta">
                                       <span class="file-icon">
                                         <i class="fas fa-file-upload"></i>
@@ -68,7 +68,7 @@
                             </p>
                             <p class="control">
                                 <div class="control is-centered">
-                                    <button type="submit" class="button is-primary">Get Booking PDF</button>
+                                    <button id="submitbutton" type="submit" class="button is-grey-light" disabled=true>Get Booking PDF</button>
                                 </div>
                             </p>
                         </div>
@@ -81,7 +81,14 @@
         </div>
 
     </section>
-    <script async type="text/javascript" src="../js/bulma.js"></script>
+
 </body>
 
+<script>
+    function changeSubmit(){
+        button = document.getElementById("submitbutton");
+        button.style.backgroundColor = "is-success";
+        button.disabled = false;
+    }
+</script>
 </html>
