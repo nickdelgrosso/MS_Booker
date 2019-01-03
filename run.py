@@ -2,7 +2,8 @@ from os import path
 from datetime import datetime
 import pandas as pd
 from kanbancard import latex, extract_comments, check_for_nonunique_columns
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
+from io import StringIO, BytesIO
 
 
 app = Flask(__name__)
@@ -14,23 +15,21 @@ def index():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
 	if request.method == 'POST':
-		return request.files['csv'].read()
+		filename, csv_data = request.files['csv'].filename, request.files['csv'].read()
+		pdf = generate_pdf(data_filename=filename, csv_data=csv_data)
+		return send_file(BytesIO(pdf), as_attachment=True, attachment_filename='booking.pdf', mimetype='application/pdf')
 
 	else:
 		return 'not validated'
 
 
-def tbd():
-
-	data_filename = 'data/test.csv'
-	template_file = 'templates/card_template.tex'
-	project_name = 'NJJF Rab10 Occupancy'
+def generate_pdf(data_filename, csv_data, project_name='NJJF Rab10 Occupancy', template_file='templates/card_template.tex'):
 
 	# Read / Validate CSV Sequence File
-	df = pd.read_csv(data_filename, skiprows=[0])
+	df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
+	# return df._repr_html_()
 	df.columns = [col[3:] if col[0] == 'L' else col for col in df.columns]
 	check_for_nonunique_columns(df, columns=['Project ID', 'Researcher', 'Comment'])
-
 
 	# Render to PDF Card via Latex
 	options = {
@@ -41,11 +40,11 @@ def tbd():
 		'df': df,
 		'Comment': extract_comments(df['Comment'][0]),
 	}
+
 	with open(template_file) as f:
 		tex = latex.render_templated_tex(tex=f.read(), **options)
-	pdf = latex.pdflatex(tex=tex)
-	with open('./card.pdf', 'wb')as f:
-		f.write(pdf)
+	pdf_str = latex.pdflatex(tex=tex)
+	return pdf_str
 
 
 if __name__ == '__main__':
