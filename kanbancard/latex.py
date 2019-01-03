@@ -24,9 +24,9 @@ def get_latex_template(tex_filename):
     return env.get_template(tex_filename)
 
 
-def write(template, filename, directory='output'):
-    if not os.path.exists(directory):  # create the build directory if not existing
-        os.makedirs(directory)
+def write(template, filename, directory='output2'):
+    if not os.path.exists(directory):  # create the build directory if not existin
+        os.mkdir(directory)
 
     with open(directory + '/' + filename, "w") as f:  # saves tex_code to outpout file
         f.write(template)

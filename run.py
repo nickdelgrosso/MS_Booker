@@ -5,7 +5,7 @@ from kanbancard import latex, extract_comments, check_for_nonunique_columns
 
 data_filename = 'data/test.csv'
 template_file = 'templates/card_template.tex'
-build_d  = 'output'
+build_d  = 'output2'
 out_file = 'card_built.tex'
 project_name = 'NJJF Rab10 Occupancy'
 
