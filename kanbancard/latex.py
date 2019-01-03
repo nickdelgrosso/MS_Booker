@@ -12,6 +12,7 @@ import os
 import jinja2
 import subprocess
 
+
 def render_templated_tex(tex, **options):
     """
     Renders latex code template with data from the options dict, lookcing for \VAR{} and \BLOCK{} in the template.
