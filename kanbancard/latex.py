@@ -1,8 +1,6 @@
 """
 Latex templating code, templated with Jinja2 and rendered with pdflatex.
 """
-
-import os
 import jinja2
 import subprocess
 
@@ -37,7 +35,3 @@ def render_templated_tex(tex, **options):
 def pdflatex(tex, output_dir='.'):
     """Call pdflatex, passing the 'tex' string to the program and putting rendered files in 'output_dir'."""
     subprocess.run(r'pdflatex -output-directory {dir}'.format(dir=output_dir), input=tex.encode())
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()

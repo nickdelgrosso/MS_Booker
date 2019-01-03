@@ -8,5 +8,6 @@ setup(
     license='',
     author='Nicholas A. Del Grosso',
     author_email='',
-    description=''
+    description='',
+    install_requires=['jinja2', 'pandas'],
 )
