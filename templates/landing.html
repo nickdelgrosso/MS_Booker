@@ -48,38 +48,32 @@
                         Submit a sample batch sequence, get a booking slot.
                     </h2>
 
-                    <form action="/upload" method="POST" enctype="multipart/form-data" novalidate>
-                        {{ form.hidden_tag() }}
-                        {{ form.csrf_token }}
-                        {{ form.csv}}
-                        {{ form.submit() }}
-                        <!--<div class="field is-grouped is-grouped-centered">-->
-                        <!--<p class="control">-->
-                            <!--<div class="file is-primary">-->
-                              <!--<label class="file-label">-->
-                                <!--<input class="file-input" type="file" name="sequencefile">-->
-                                <!--<span class="file-cta">-->
-                                  <!--<span class="file-icon">-->
-                                    <!--<i class="fas fa-file-upload"></i>-->
-                                  <!--</span>-->
-                                  <!--<span class="file-label">-->
-                                    <!--Upload CSV-->
-                                  <!--</span>-->
-                                <!--</span>-->
-                              <!--</label>-->
-                            <!--</div>-->
-                        <!--</p>-->
-                        <!--<p class="control">-->
-                            <!--<div class="control is-centered">-->
-                                <!--<button type="submit" class="button is-primary">Get Booking PDF</button>-->
-                            <!--</div>-->
-                        <!--</p>-->
-                    <!--</div>-->
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+
+                        <div class="field is-grouped is-grouped-centered">
+                            <p class="control">
+                                <div class="file is-primary">
+                                  <label class="file-label">
+                                    <input class="file-input" type="file" name="csv">
+                                    <span class="file-cta">
+                                      <span class="file-icon">
+                                        <i class="fas fa-file-upload"></i>
+                                      </span>
+                                      <span class="file-label">
+                                        Upload CSV
+                                      </span>
+                                    </span>
+                                  </label>
+                                </div>
+                            </p>
+                            <p class="control">
+                                <div class="control is-centered">
+                                    <button type="submit" class="button is-primary">Get Booking PDF</button>
+                                </div>
+                            </p>
+                        </div>
 
                     </form>
-
-
-
 
                     </div>
                 </div>

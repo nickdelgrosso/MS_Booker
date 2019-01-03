@@ -9,5 +9,5 @@ setup(
     author='Nicholas A. Del Grosso',
     author_email='',
     description='',
-    install_requires=['jinja2', 'pandas', 'flask', 'wtforms', 'Flask-WTF'],
+    install_requires=['jinja2', 'pandas', 'flask'],
 )

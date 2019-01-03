@@ -2,41 +2,21 @@ from os import path
 from datetime import datetime
 import pandas as pd
 from kanbancard import latex, extract_comments, check_for_nonunique_columns
-from flask import Flask, render_template, request, redirect, url_for
-from wtforms import SubmitField, StringField
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired
-from flask_wtf.csrf import CSRFProtect
-from werkzeug.utils import secure_filename
-from werkzeug.datastructures import CombinedMultiDict
+from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
-app.secret_key = b'adfajfakfjlafj;fndjkanfklj'
-app.config['UPLOAD_FOLDER'] = './tmp'
-
-csrf = CSRFProtect(app)
-
-class SequenceForm(FlaskForm):
-	csv = FileField()
-	submit = SubmitField('Sign In')
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	form = SequenceForm()
-	return render_template('landing.html', form=form)
+	return render_template('landing.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-	form = SequenceForm()#CombinedMultiDict((request.files, request.form)))
-	if form.validate_on_submit():
-		# return str(form.csv.data.content_length)
+	if request.method == 'POST':
+		return request.files['csv'].read()
 
-		form.csv.data.save('testdata.txt')
-		return str(form.csv.data.filename)
 	else:
-		print('not validated')
 		return 'not validated'
 
 
