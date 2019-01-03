@@ -17,7 +17,7 @@ check_for_nonunique_columns(df, columns=['Project ID', 'Researcher', 'Comment'])
 
 # Render to PDF Card via Latex
 options = {
-	'ProjectName': project_name,
+	'Project': project_name,
 	'BatchID': 1,
 	'Date': datetime.now().strftime('%d.%m.%Y'),
 	'Filename': path.basename(data_filename),
