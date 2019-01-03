@@ -3,7 +3,8 @@ Latex templating code, templated with Jinja2 and rendered with pdflatex.
 """
 import jinja2
 import subprocess
-
+import tempfile
+from os import path
 
 def render_templated_tex(tex, **options):
     r"""
@@ -32,6 +33,13 @@ def render_templated_tex(tex, **options):
     return rendered_tex
 
 
-def pdflatex(tex, output_dir='.'):
-    """Call pdflatex, passing the 'tex' string to the program and putting rendered files in 'output_dir'."""
-    subprocess.run(r'pdflatex -output-directory {dir}'.format(dir=output_dir), input=tex.encode())
+def pdflatex(tex):
+    """
+    Returns the pdf bytestring from pdflatex's rendering of the 'tex' string.
+    (Auxillary files are stored in temporary directory and deleted.)
+    """
+    with tempfile.TemporaryDirectory() as output_dir:
+        subprocess.run(r'pdflatex -output-directory {dir}'.format(dir=output_dir), input=tex.encode())
+        with open(path.join(output_dir, 'texput.pdf'), 'rb') as f:
+            pdf = f.read()
+            return pdf

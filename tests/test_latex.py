@@ -1,5 +1,4 @@
 from kanbancard import latex
-import tempfile
 
 
 def test_latex_renderer():
@@ -27,6 +26,17 @@ def test_pdflatex_runs(capfd):
             My name is Sir Arthur, and I search for the Holy Grail.
         \end{document}
     """
-    latex.pdflatex(tex, output_dir=tempfile.tempdir)
+    latex.pdflatex(tex)
     captured = capfd.readouterr()
     assert "Output written on" in captured.out
+
+
+def test_pdflatex_returns_pdf_containing_text(capfd):
+    tex = r"""
+        \documentclass{article}
+        \begin{document}
+            My name is Sir Arthur, and I search for the Holy Grail.
+        \end{document}
+    """
+    pdf = latex.pdflatex(tex)
+    assert 'PDF' in pdf[:10].decode()
