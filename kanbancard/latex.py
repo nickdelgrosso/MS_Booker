@@ -1,11 +1,5 @@
 """
 Latex templating code, templated with Jinja2 and rendered with pdflatex.
-
-Examples:
->>>with open(tex_filename) as f:
->>>    tex = f.read()
->>>tex = render_templated_tex(tex, **options)
->>>pdflatex(tex=tex, output_dir=output_dir)
 """
 
 import os
@@ -14,7 +8,7 @@ import subprocess
 
 
 def render_templated_tex(tex, **options):
-    """
+    r"""
     Renders latex code template with data from the options dict, lookcing for \VAR{} and \BLOCK{} in the template.
 
     Arguments:
@@ -44,3 +38,6 @@ def pdflatex(tex, output_dir='.'):
     """Call pdflatex, passing the 'tex' string to the program and putting rendered files in 'output_dir'."""
     subprocess.run(r'pdflatex -output-directory {dir}'.format(dir=output_dir), input=tex.encode())
 
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
