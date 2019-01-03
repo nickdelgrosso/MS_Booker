@@ -2,7 +2,7 @@ from os import path
 from datetime import datetime
 import pandas as pd
 from kanbancard import latex, extract_comments, check_for_nonunique_columns
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, make_response
 from io import StringIO, BytesIO
 
 
@@ -17,7 +17,10 @@ def upload():
 	if request.method == 'POST':
 		filename, csv_data = request.files['csv'].filename, request.files['csv'].read()
 		pdf = generate_pdf(data_filename=filename, csv_data=csv_data)
-		return send_file(BytesIO(pdf), as_attachment=True, attachment_filename='booking.pdf', mimetype='application/pdf')
+		response = make_response(pdf)
+		response.headers['Content-Disposition'] = "inline; filename='booking.pdf"
+		response.mimetype = 'application/pdf'
+		return response
 
 	else:
 		return 'not validated'
