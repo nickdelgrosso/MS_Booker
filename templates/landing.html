@@ -39,18 +39,21 @@
         </div>
 
         <div class="hero-body">
-            <div class="container has-text-centered">
-                <div class="column">
-                    <h1 id="title" class="title">
+            <div class="container">
+                <div>
+{#                    class="column">#}
+                    <h1 id="title" class="title" style="white-space: nowrap;">
                         Mass Spec Booking, Simplified.
                     </h1>
+                </div>
+                <div>
                     <h2 class="subtitle">
                         Submit a sequence, get a Queue card.
                     </h2>
 
                     <form action="/upload" method="POST" enctype="multipart/form-data">
 
-                        <div class="field is-grouped is-grouped-centered">
+                        <div class="field is-grouped">
                             <p class="control">
                                 <div class="file is-primary">
                                   <label class="file-label">
@@ -91,14 +94,23 @@
         button.disabled = false;
 
         text = document.getElementById("title");
+        {#text.style.letterSpacing = "4px";#}
         text.animate([
-             {  transform: 'translateX(0px)' },
-              { transform: 'translateX(2000px)' },
+             {  transform: 'translateX(0px)',
+                letterSpacing: '1px'
+             },
+              { transform: 'translateX(500px)',
+                letterSpacing: '200px'
+              },
+                { transform: 'translateX(3000px)',
+                letterSpacing: '400px'
+              },
             ], {
             // timing options
             duration: 4000,
             iterations: 1,
-            easing: "ease-in"
+            easing: "ease-in",
+            fill: "forwards"
         });
 
     }
