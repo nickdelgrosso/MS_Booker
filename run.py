@@ -2,20 +2,20 @@ from os import path
 from datetime import datetime
 import pandas as pd
 from kanbancard import latex, extract_comments, check_for_nonunique_columns
-from flask import Flask, render_template, request, send_file, make_response
-from io import StringIO, BytesIO
+from flask import Flask, render_template, request, make_response
+from io import BytesIO
 
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def index():
 	return render_template('landing.html')
 
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-	# if request.method == 'GET':
-	# 	red
 	filename, csv_data = request.files['csv'].filename, request.files['csv'].read()
 	pdf = generate_pdf(data_filename=filename, csv_data=csv_data)
 	response = make_response(pdf)
@@ -24,29 +24,26 @@ def upload():
 	return response
 
 
-
-def generate_pdf(data_filename, csv_data, project_name='NJJF Rab10 Occupancy', template_file='templates/card_template.tex'):
+def generate_pdf(data_filename, csv_data, template_file='templates/card_template.tex'):
 
 	# Read / Validate CSV Sequence File
 	df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
-	# return df._repr_html_()
-	df.columns = [col[3:] if col[0] == 'L' else col for col in df.columns]
-	check_for_nonunique_columns(df, columns=['Project ID', 'Researcher', 'Comment'])
+	metadata = dict([el.strip().lstrip() for el in item.split(': ')] for item in df['Comment'][0].split(','))
 
 	# Render to PDF Card via Latex
 	options = {
-		'Project': project_name,
+		'Project': metadata['Project'],
 		'BatchID': 1,
 		'Date': datetime.now().strftime('%d.%m.%Y'),
 		'Filename': path.basename(data_filename),
 		'df': df,
-		'Comment': extract_comments(df['Comment'][0]),
+		'Comments': metadata,
+		'Researcher': metadata['Researcher'],
 	}
 
 	with open(template_file) as f:
 		tex = latex.render_templated_tex(tex=f.read(), **options)
-	pdf_str = latex.pdflatex(tex=tex)
-	return pdf_str
+		return latex.pdflatex(tex=tex)
 
 
 if __name__ == '__main__':

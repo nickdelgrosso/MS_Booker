@@ -32,7 +32,7 @@
 	\rule{\textwidth}{.3mm}\\
 
     \noindent\textbf{\Huge{\VAR{Project}}}\\
-    \Large{\VAR{df['Researcher'][0]} \hfill \VAR{df['Project ID'][0].replace('_', '\\_')} - \textbf{Batch \VAR{BatchID}}}\\
+    \Large{\VAR{Researcher} \hfill \textbf{Batch \VAR{BatchID}}}\\
     \rule{\textwidth}{.3mm}\\
     \normalsize{\textbf{Queue:} \VAR{Filename.replace('_', '\\_')}}
 	\vspace{3mm}
@@ -41,34 +41,32 @@
 	\begin{minipage}[t]{\textwidth}
 	    \begin{minipage}[t][4cm]{0.4\textwidth}
 		    \strut\vspace*{-\baselineskip}\newline
-	        {\normalsize
-	        	\begin{tabular}{| r p{3cm} | p{1cm} |}
-					\hline
-					{\color{gray}Tip Box} & \hfill{} & \hfill{}\\
-	        		\BLOCK{for Key, Value in Comment.items()}
-		        		\hline
-		            	{\color{gray}\VAR{Key.replace('_', '\\_')}} & \VAR{Value.replace('_', '\\_')} & \hfill{}\\
-	            	\BLOCK{endfor}
-	            \hline
-            \end{tabular}
-	        }
+			\textbf{Tip Box:} $\rule{5cm}{0.15mm}$ \\
+
+			\BLOCK{for name, val in Comments.items()}
+				\textbf{\VAR{name}}: \VAR{val} \\
+			\BLOCK{endfor}
 	    \end{minipage}
-	    \begin{minipage}[]{0.35\textwidth}
-		    \strut\vspace*{-\baselineskip}\newline
-	    	    \center{\Large\color{gray}Notes}
-	    \end{minipage}    
+		\fbox{
+	    \begin{minipage}[t][5cm]{0.35\textwidth}
+		    \strut\vspace*{-\baselineskip}
+			\center{\Large\color{gray}Recording Notes}
+	    \end{minipage}
+		}
 	    \begin{minipage}[t]{0.15\textwidth}
 	    		\small
 		    \strut\vspace*{-\baselineskip}\newline
 	    		\begin{tabular}{|p{\textwidth}|}
 	    		 \hline
 	    		 Date\_Created: \textbf{\VAR{Date}}\\
+				 \hline
+	    		 {\color{lightgray}Desired Start Date}\\
 	    		 \hline    		 
-	    		 {\color{gray}Date Queued}\\
+	    		 {\color{lightgray}Date Queued}\\
 	    		 \hline
-	    		 {\color{gray}Date Started}\\
+	    		 {\color{lightgray}Date Started}\\
 	    		 \hline
-	    		 {\color{gray}Date Done}\\
+	    		 {\color{lightgray}Date Done}\\
 	    		 \hline
 	    		\end{tabular}\\
 	    \end{minipage}
