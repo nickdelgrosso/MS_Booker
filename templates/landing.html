@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" href="../css/landing.css">
 
-    <!--<meta http-equiv="refresh" content="3" >-->
+
 </head>
 
 <body>
@@ -41,7 +41,7 @@
         <div class="hero-body">
             <div class="container has-text-centered">
                 <div class="column">
-                    <h1 class="title">
+                    <h1 id="title" class="title">
                         Mass Spec Booking, Simplified.
                     </h1>
                     <h2 class="subtitle">
@@ -89,6 +89,18 @@
         button = document.getElementById("submitbutton");
         button.style.backgroundColor = "is-success";
         button.disabled = false;
+
+        text = document.getElementById("title");
+        text.animate([
+             {  transform: 'translateX(0px)' },
+              { transform: 'translateX(2000px)' },
+            ], {
+            // timing options
+            duration: 4000,
+            iterations: 1,
+            easing: "ease-in"
+        });
+
     }
 </script>
 </html>
