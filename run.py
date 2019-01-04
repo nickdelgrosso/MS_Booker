@@ -28,7 +28,7 @@ def generate_pdf(data_filename, csv_data, template_file='templates/card_template
 
 	# Read / Validate CSV Sequence File
 	df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
-	metadata = dict([el.strip().lstrip() for el in item.split(': ')] for item in df['Comment'][0].split(','))
+	metadata = dict([el.strip().lstrip() for el in item.split(':')] for item in df['Comment'][0].split(','))
 
 	# Render to PDF Card via Latex
 	options = {
