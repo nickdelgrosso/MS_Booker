@@ -1,3 +1,4 @@
+import os
 from os import path
 from datetime import datetime
 import pandas as pd
@@ -72,6 +73,9 @@ def generate_pdfs(data_filename, csv_data, template_file='templates/card_templat
 
 		with open(template_file) as f:
 			tex = latex.render_templated_tex(tex=f.read(), **options)
+
+		if not path.exists(csv_save_dir):
+			os.mkdir(csv_save_dir)
 
 		new_filename = "{}_{}.csv".format(path.join(csv_save_dir, path.splitext(path.basename(data_filename))[0]), batch_name)
 		with open(new_filename, 'w') as f:
