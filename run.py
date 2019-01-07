@@ -24,8 +24,8 @@ def upload():
 	return response
 
 
-@app.route('/download', methods=['POST'])
-def download():
+@app.route('/download_example', methods=['GET'])
+def download_example():
 	with open('./data/test.csv') as f:
 		csv = f.read()
 	response = make_response(csv)
