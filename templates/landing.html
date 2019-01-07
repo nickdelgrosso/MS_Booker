@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" href="../css/landing.css">
 
-    <meta http-equiv="refresh" content="1">
+    <!--<meta http-equiv="refresh" content="1">-->
 
 
 </head>
@@ -76,7 +76,7 @@
                                 </p>
                                 <p class="control">
                                     <div class="control is-centered">
-                                        <button id="submitbutton" type="submit" class="button is-grey-light" disabled=false>Generate PDF</button>
+                                        <button id="submitbutton" type="submit" class="button is-grey-light" disabled=true>Generate PDF</button>
                                     </div>
                                 </p>
                             </div>
@@ -145,25 +145,25 @@
         button.style.backgroundColor = "is-success";
         button.disabled = false;
 
-        text = document.getElementById("title");
-        {#text.style.letterSpacing = "4px";#}
-        text.animate([
-             {  transform: 'translateX(0px)',
-                letterSpacing: '1px'
-             },
-              { transform: 'translateX(500px)',
-                letterSpacing: '200px'
-              },
-                { transform: 'translateX(3000px)',
-                letterSpacing: '400px'
-              },
-            ], {
-            // timing options
-            duration: 4000,
-            iterations: 1,
-            easing: "ease-in",
-            fill: "forwards"
-        });
+        // text = document.getElementById("title");
+        // {#text.style.letterSpacing = "4px";#}
+        // text.animate([
+        //      {  transform: 'translateX(0px)',
+        //         letterSpacing: '1px'
+        //      },
+        //       { transform: 'translateX(500px)',
+        //         letterSpacing: '200px'
+        //       },
+        //         { transform: 'translateX(3000px)',
+        //         letterSpacing: '400px'
+        //       },
+        //     ], {
+        //     // timing options
+        //     duration: 4000,
+        //     iterations: 1,
+        //     easing: "ease-in",
+        //     fill: "forwards"
+        // });
 
     }
 </script>
