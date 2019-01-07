@@ -4,6 +4,7 @@ import pandas as pd
 from kanbancard import latex, extract_comments, check_for_nonunique_columns
 from flask import Flask, render_template, request, make_response
 from io import BytesIO
+from uuid import uuid4
 
 
 app = Flask(__name__)
@@ -37,13 +38,20 @@ def download_example():
 def generate_pdf(data_filename, csv_data, template_file='templates/card_template.tex'):
 
 	# Read / Validate CSV Sequence File
-	df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
+	try:
+		df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
+		batch = str(uuid4()).split('-')[0]
+	except:
+		excel_reader = pd.ExcelFile(BytesIO(csv_data))
+		batch = excel_reader.sheet_names[0]
+		df = excel_reader.parse(batch, skiprows=[0])
+
 	metadata = dict([el.strip().lstrip() for el in item.split(':')] for item in df['Comment'][0].split(','))
 
 	# Render to PDF Card via Latex
 	options = {
 		'Project': metadata['Project'],
-		'BatchID': 1,
+		'BatchID': batch,
 		'Date': datetime.now().strftime('%d.%m.%Y'),
 		'Filename': path.basename(data_filename),
 		'df': df,

@@ -9,6 +9,6 @@ setup(
     author='Nicholas A. Del Grosso',
     author_email='',
     description='',
-    install_requires=['jinja2', 'pandas', 'flask'],
+    install_requires=['jinja2', 'pandas', 'flask', 'xlrd'],
 )
 c
