@@ -2,7 +2,7 @@ import os
 from os import path
 from datetime import datetime
 import pandas as pd
-from kanbancard import latex, extract_comments, check_for_nonunique_columns
+from kanbancard import latex
 from flask import Flask, render_template, request, make_response
 from io import BytesIO
 from uuid import uuid4
