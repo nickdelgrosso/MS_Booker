@@ -24,6 +24,16 @@ def upload():
 	return response
 
 
+@app.route('/download', methods=['POST'])
+def download():
+	with open('./data/test.csv') as f:
+		csv = f.read()
+	response = make_response(csv)
+	response.headers['Content-Disposition'] = "inline; filename='example_sequence.csv"
+	response.mimetype = 'text/csv'
+	return response
+
+
 def generate_pdf(data_filename, csv_data, template_file='templates/card_template.tex'):
 
 	# Read / Validate CSV Sequence File

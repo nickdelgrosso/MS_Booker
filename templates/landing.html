@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" href="../css/landing.css">
 
+    <meta http-equiv="refresh" content="1">
+
 
 </head>
 
@@ -50,33 +52,52 @@
                     <h2 class="subtitle">
                         Submit a sequence, get a Queue card.
                     </h2>
+                    <div class="columns">
 
-                    <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <div class="column is-three-quarters">
+                        <form action="/upload" method="POST" enctype="multipart/form-data">
 
-                        <div class="field is-grouped">
-                            <p class="control">
-                                <div class="file is-primary">
-                                  <label class="file-label">
-                                    <input class="file-input" type="file" name="csv" oninput="changeSubmit()">
-                                    <span class="file-cta">
-                                      <span class="file-icon">
-                                        <i class="fas fa-file-upload"></i>
-                                      </span>
-                                      <span class="file-label">
-                                        Upload CSV
-                                      </span>
-                                    </span>
-                                  </label>
-                                </div>
-                            </p>
-                            <p class="control">
-                                <div class="control is-centered">
-                                    <button id="submitbutton" type="submit" class="button is-grey-light" disabled=false>Generate PDF</button>
-                                </div>
-                            </p>
+
+                            <div class="field is-grouped">
+                                <p class="control">
+                                    <div class="file is-primary">
+                                      <label class="file-label">
+                                        <input class="file-input" type="file" name="csv" oninput="changeSubmit()">
+                                        <span class="file-cta">
+                                          <span class="file-icon">
+                                            <i class="fas fa-file-upload"></i>
+                                          </span>
+                                          <span class="file-label">
+                                            Upload CSV
+                                          </span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                </p>
+                                <p class="control">
+                                    <div class="control is-centered">
+                                        <button id="submitbutton" type="submit" class="button is-grey-light" disabled=false>Generate PDF</button>
+                                    </div>
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="column is-one-quarter">
+                        <form action="/download" method="POST" enctype="multipart/form-data">
+
+                            <div class="field is-grouped">
+                                <p class="control">
+                                    <div class="control">
+                                        <button type="submit" class="button is-grey-light is-info"><i class="fas fa-download"></i>.  For Help, See Example CSV</button>
+                                    </div>
+                                </p>
+                            </div>
+
+                        </form>
                         </div>
-
-                    </form>
+                    </div>
 
                 </div>
                 <br><br>
