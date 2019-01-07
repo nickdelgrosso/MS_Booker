@@ -6,6 +6,8 @@ from flask import Flask, render_template, request, make_response
 from io import BytesIO
 from uuid import uuid4
 from PyPDF2 import PdfFileMerger
+import xlrd
+
 
 
 app = Flask(__name__)
@@ -45,10 +47,11 @@ def generate_pdfs(data_filename, csv_data, template_file='templates/card_templat
 		batch_name = str(uuid4()).split('-')[0]
 		df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
 		batches = {batch_name: df}
-		pre_header = csv_data.splitlines()[0]
+		pre_header = csv_data.splitlines()[0].decode()
 	else:
 		excel_reader = pd.ExcelFile(BytesIO(csv_data))
 		batches = {sheet_name: excel_reader.parse(sheet_name, skiprows=[0]) for sheet_name in excel_reader.sheet_names}
+		pre_header = xlrd.open_workbook(file_contents=csv_data).sheet_by_name('1').row(0)[0].value
 
 	pdf_merger = PdfFileMerger()
 	for batch_name, df in batches.items():
@@ -72,7 +75,7 @@ def generate_pdfs(data_filename, csv_data, template_file='templates/card_templat
 
 		new_filename = "{}_{}.csv".format(path.join(csv_save_dir, path.splitext(path.basename(data_filename))[0]), batch_name)
 		with open(new_filename, 'w') as f:
-			f.write(pre_header.decode() + '\n')
+			f.write(pre_header + '\n')
 			df.to_csv(f, index_label=False, index=False)
 
 
