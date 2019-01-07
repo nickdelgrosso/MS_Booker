@@ -10,6 +10,8 @@ from PyPDF2 import PdfFileMerger
 
 app = Flask(__name__)
 
+csv_save_dir = 'out_files'
+
 
 @app.route('/')
 def index():
@@ -43,6 +45,7 @@ def generate_pdfs(data_filename, csv_data, template_file='templates/card_templat
 		batch_name = str(uuid4()).split('-')[0]
 		df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
 		batches = {batch_name: df}
+		pre_header = csv_data.splitlines()[0]
 	else:
 		excel_reader = pd.ExcelFile(BytesIO(csv_data))
 		batches = {sheet_name: excel_reader.parse(sheet_name, skiprows=[0]) for sheet_name in excel_reader.sheet_names}
@@ -66,6 +69,11 @@ def generate_pdfs(data_filename, csv_data, template_file='templates/card_templat
 
 		with open(template_file) as f:
 			tex = latex.render_templated_tex(tex=f.read(), **options)
+
+		new_filename = "{}_{}.csv".format(path.join(csv_save_dir, path.splitext(path.basename(data_filename))[0]), batch_name)
+		with open(new_filename, 'w') as f:
+			f.write(pre_header.decode() + '\n')
+			df.to_csv(f, index_label=False, index=False)
 
 
 		pdf = latex.pdflatex(tex=tex)
