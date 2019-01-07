@@ -18,6 +18,7 @@
 
 \usepackage{dashrule}
 \usepackage{tikz}
+\usepackage{bbding}
 
 
 \pagestyle{empty}
@@ -92,7 +93,9 @@ rectangle (0.8cm,1.1em) node[pos=.5] {\VAR{row.Position}};
 	\begin{minipage}[c]{0.15\textwidth}
 		\textbf{\VAR{df|length} Samples}
 	\end{minipage}
-        
-	
+
+	\vspace{1em}\\
+	\raisebox{-4pt}[0pt][0.5\baselineskip]{\small\ScissorHollowRight}\unskip{\tikz \draw [dashed] (0,0) -- (0.9\textwidth,0);}
+
 	
 \end{document}
