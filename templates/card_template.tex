@@ -75,23 +75,23 @@
     \end{minipage}
 
 	\noindent\begin{minipage}[t]{0.8\textwidth}
-	\BLOCK{for name, row in df.iterrows()}
+	\BLOCK{for sample in Samples}
 	    \noindent\tikz\filldraw
-			\BLOCK{if row['Sample Type'] == "QC"}
+			\BLOCK{if sample['Sample Type'] == "QC"}
 [fill=gray!40!white, draw=black]
 			\BLOCK{elif loop.index > df|length - 5}
 [fill=orange!40!white, draw=black]
 			\BLOCK{else}
 [fill=white!40!white, draw=black]
 			\BLOCK{endif}
-rectangle (0.8cm,1.1em) node[pos=.5] {\VAR{row.Position}};
+rectangle (0.8cm,1.1em) node[pos=.5] {\VAR{sample.Position}};
 		\BLOCK{if loop.index % 15 == 0}
 			\vspace{1.5mm}\\
 		\BLOCK{endif}
     \BLOCK{endfor}
     \end{minipage}
 	\begin{minipage}[c]{0.15\textwidth}
-		\textbf{\VAR{df|length} Samples}
+		\textbf{\VAR{Samples|length} Samples}
 	\end{minipage}
 
 	\vspace{1em}\\

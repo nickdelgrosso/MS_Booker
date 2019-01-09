@@ -19,12 +19,12 @@ def upload():
     filename, csv_data = request.files['csv'].filename, request.files['csv'].read()
     df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
     metadata = dict([el.strip() for el in item.split(':')] for item in df['Comment'][0].split(','))
-
+    samples = [row for _, row in df.iterrows()]
     pdf = kanbancard.generate_card_pdf(
         template_file=template_file,
         sequence_filename=filename,
-        df=df,
         comments=metadata,
+        samples=samples,
     )
 
     response = make_response(pdf)
