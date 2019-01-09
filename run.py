@@ -24,11 +24,11 @@ def upload():
 
 @app.route('/download_example', methods=['GET'])
 def download_example():
-	with open('./data/test.xlsx', 'rb') as f:
+	with open('./data/test.csv') as f:
 		csv = f.read()
 	response = make_response(csv)
-	response.headers['Content-Disposition'] = "inline; filename='example_sequence.xlsx"
-	response.mimetype = 'application/vnd.ms-excel'
+	response.headers['Content-Disposition'] = "inline; filename='example_sequence.csv"
+	response.mimetype = 'text/csv'
 	return response
 
 
