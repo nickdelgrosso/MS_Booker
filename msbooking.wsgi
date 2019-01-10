@@ -1,1 +1,1 @@
-from card_app import app as application
+from card_app import app
