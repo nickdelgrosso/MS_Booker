@@ -1,12 +1,17 @@
 from flask import Flask, render_template, request, make_response
 import pandas as pd
 from io import BytesIO
-import kanbancard
+from datetime import datetime
+from uuid import uuid4
+from kanbancard.card import df_to_card_pdf
 
 
 app = Flask(__name__)
 
+
 template_file = 'templates/card_template.tex'
+with open(template_file) as f:
+    template_tex = f.read()
 
 
 @app.route('/')
@@ -18,14 +23,9 @@ def index():
 def upload():
     filename, csv_data = request.files['csv'].filename, request.files['csv'].read()
     df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
-    metadata = dict([el.strip() for el in item.split(':')] for item in df['Comment'][0].split(','))
-    samples = [row for _, row in df.iterrows()]
-    pdf = kanbancard.generate_card_pdf(
-        template_file=template_file,
-        sequence_filename=filename,
-        comments=metadata,
-        samples=samples,
-    )
+    batch_id = str(uuid4())[:5].upper()
+    date = datetime.now()
+    pdf = df_to_card_pdf(template_tex=template_tex, df=df, filename=filename, batch_id=batch_id, date=date)
 
     response = make_response(pdf)
     response.headers['Content-Disposition'] = "inline; filename='booking.pdf"

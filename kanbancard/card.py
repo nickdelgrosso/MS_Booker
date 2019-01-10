@@ -1,10 +1,4 @@
-from datetime import datetime
-from uuid import uuid4
 from . import latex
-from collections import namedtuple
-
-
-Sample = namedtuple('Sample', 'Type Position')
 
 
 def df_to_xcalibur_csv(df, bracket=4):
@@ -12,14 +6,10 @@ def df_to_xcalibur_csv(df, bracket=4):
     return 'Bracket Type={}{}\n{}'.format(bracket, ',' * (df.shape[1] - 1), df.to_csv(index=False))
 
 
-def generate_card_pdf(template_file, sequence_filename, comments, samples):
-    # Render to PDF Card via Latex
-    batch_id = str(uuid4()).split('-')[0]
-    date = datetime.now().strftime('%d.%m.%Y')
-
-    with open(template_file) as f:
-        tex = f.read()
-    tex = latex.render_templated_tex(tex, BatchID=batch_id, Date=date, Filename=sequence_filename, Comments=comments, Samples=samples)
-
+def df_to_card_pdf(template_tex, df, filename, batch_id, date):
+    comments = dict([el.strip() for el in item.split(':')] for item in df['Comment'][0].split(','))
+    samples = [row for _, row in df.iterrows()]
+    tex = latex.render_templated_tex(template_tex, BatchID=batch_id, Date=date.strftime('%d.%m.%Y'), Filename=filename,
+                                     Comments=comments, Samples=samples)
     pdf = latex.pdflatex(tex=tex)
     return pdf
