@@ -6,6 +6,8 @@ import jinja2
 import subprocess
 import tempfile
 from os import path
+from io import BytesIO
+from PyPDF2 import PdfFileMerger
 
 
 def render_templated_tex(tex, **options):
@@ -46,3 +48,15 @@ def pdflatex(tex):
         with open(path.join(output_dir, 'texput.pdf'), 'rb') as f:
             pdf = f.read()
             return pdf
+
+
+def merge_pdfs(*pdf_data):
+    """Returns a joined pdf version of any number of pdf data arguments."""
+    pdf_merger = PdfFileMerger()
+    for pdf in pdf_data:
+        pdf_merger.append(BytesIO(pdf))
+
+    with BytesIO() as f:
+        pdf_merger.write(f)
+        f.seek(0)
+        return f.read()
