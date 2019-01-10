@@ -11,4 +11,5 @@ setup(
     description='',
     install_requires=['jinja2', 'pandas', 'flask', 'xlrd', 'PyPDF2'],
     include_package_data=True,
+    zip_safe=False,
 )
