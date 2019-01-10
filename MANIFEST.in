@@ -1,1 +1,5 @@
-graft templates
+recursive-include card_app *.css
+recursive-include card_app *.csv
+recursive-include card_app *.html
+recursive-include card_app *.pyc
+recursive-include card_app *.tex
