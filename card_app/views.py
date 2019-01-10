@@ -2,12 +2,10 @@ from os import path
 from io import BytesIO
 from datetime import datetime
 from uuid import uuid4
-from flask import Flask, render_template, request, make_response
+from flask import render_template, request, make_response
 import pandas as pd
 from .card import df_to_card_pdf
-
-
-app = Flask(__name__)
+from . import app
 
 
 template_file = path.join(app.root_path, 'templates', 'card_template.tex')
