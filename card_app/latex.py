@@ -20,11 +20,11 @@ def render_templated_tex(tex, **options):
     Approach taken from http://eosrei.net/articles/2015/11/latex-templates-python-and-jinja2-generate-pdfs
     """
     env = jinja2.Environment(
-        block_start_string='\BLOCK{',
+        block_start_string=r'\BLOCK{',
         block_end_string='}',
-        variable_start_string='\VAR{',
+        variable_start_string=r'\VAR{',
         variable_end_string='}',
-        comment_start_string='\#{',
+        comment_start_string=r'\#{',
         comment_end_string='}',
         line_statement_prefix='%%',
         line_comment_prefix='%#',
