@@ -40,12 +40,14 @@
 
 %    \hspace{1mm}
 	\begin{minipage}[t]{\textwidth}
-	    \begin{minipage}[t][4cm]{0.4\textwidth}
+	    \begin{minipage}[t]{0.4\textwidth}
 		    \strut\vspace*{-\baselineskip}\newline
 			\textbf{Tip Box:} $\rule{5cm}{0.15mm}$ \\
 
+			\textbf{Sample Concentration:} $\rule{1.8cm}{0.15mm}$ \\
+
 			\BLOCK{for name, val in Comments.items()}
-				\textbf{\VAR{name | replace("_", "\_")}}: \VAR{val | replace("_", "\_")} \\
+				\textbf{\VAR{name | replace("_", "\_")}}: \VAR{val | replace("_", "\_") | truncate(25)} \\
 			\BLOCK{endfor}
 	    \end{minipage}
 		\fbox{
