@@ -1,7 +1,7 @@
 FROM python:3.6
 
 RUN apt-get update
-RUN apt-get install -y texlive-full
+RUN apt-get install -y texlive-full  # This works, but it is massive (4.5 GB).
 #RUN apt-get install xzdec
 #RUN tlmgr init-usertree
 #RUN tlmgr option repository ctan
