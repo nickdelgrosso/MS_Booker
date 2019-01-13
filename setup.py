@@ -9,7 +9,7 @@ setup(
     author='Nicholas A. Del Grosso',
     author_email='delgrosso@biochem.mpg.de',
     description='',
-    install_requires=['jinja2', 'pandas', 'flask', 'xlrd', 'PyPDF2'],
+    install_requires=['jinja2', 'pandas', 'flask', 'xlrd', 'PyPDF2', 'XCaliburMethodReader'],
     include_package_data=True,
     zip_safe=False,
 )
