@@ -14,31 +14,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" href="../css/landing.css">
 
-    <meta http-equiv="refresh" content="2">
+    <!--<meta http-equiv="refresh" content="2">-->
 
 
 </head>
 
 <body>
     <section class="hero is-fullheight">
-        <div class="hero-head">
-            <nav class="navbar">
-                <div class="container">
-                    <div id="navbarMenu" class="navbar-menu">
-                        <div class="navbar-end">
-                            <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="https://github.com/dansup/bulma-templates/blob/master/templates/landing.html">
-                                    <span class="icon">
-                                        <i class="fa fab-github"></i>
-                                    </span>
-                                    <span>View Source</span>
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
 
         <div class="hero-body">
             <div class="container">
@@ -62,7 +44,7 @@
                                 <p class="control">
                                     <div class="file is-primary">
                                       <label class="file-label">
-                                        <input class="file-input" type="file" name="csv" oninput="changeSubmit()">
+                                        <input class="file-input" type="file" name="csv">
                                         <span class="file-cta">
                                           <span class="file-icon">
                                             <i class="fas fa-file-upload"></i>
@@ -75,8 +57,23 @@
                                     </div>
                                 </p>
                                 <p class="control">
+                                    <div class="file is-primary">
+                                      <label class="file-label">
+                                        <input class="file-input" type="file" name="method">
+                                        <span class="file-cta">
+                                          <span class="file-icon">
+                                            <i class="fas fa-file-upload"></i>
+                                          </span>
+                                          <span class="file-label">
+                                            Upload Method File
+                                          </span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                </p>
+                                <p class="control">
                                     <div class="control is-centered">
-                                        <button id="submitbutton" type="submit" class="button is-grey-light" disabled=true>Generate PDF</button>
+                                        <button id="submitbutton" type="submit" class="button">Generate PDF</button>
                                     </div>
                                 </p>
                             </div>
@@ -142,32 +139,4 @@
 
 </body>
 
-<script>
-    function changeSubmit(){
-        button = document.getElementById("submitbutton");
-        button.style.backgroundColor = "is-success";
-        button.disabled = false;
-
-        // text = document.getElementById("title");
-        // {#text.style.letterSpacing = "4px";#}
-        // text.animate([
-        //      {  transform: 'translateX(0px)',
-        //         letterSpacing: '1px'
-        //      },
-        //       { transform: 'translateX(500px)',
-        //         letterSpacing: '200px'
-        //       },
-        //         { transform: 'translateX(3000px)',
-        //         letterSpacing: '400px'
-        //       },
-        //     ], {
-        //     // timing options
-        //     duration: 4000,
-        //     iterations: 1,
-        //     easing: "ease-in",
-        //     fill: "forwards"
-        // });
-
-    }
-</script>
 </html>
