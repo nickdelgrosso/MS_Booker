@@ -66,14 +66,12 @@
 	}\\
 
 	\vspace{0.5cm}
-	\adjustbox{minipage=[m][6cm][s]{\linewidth}}{
+	\adjustbox{minipage=[m][4cm][s]{\linewidth}}{
 		\center{\color{gray}Recording Notes}
 	}\\
 
-	\vspace{3mm} \\
-
 	\adjustbox{minipage=\linewidth}{
-		\textbf{\VAR{Samples|length} Samples}
+		\textbf{\VAR{Samples|length} Samples x (\VAR{Gradient['duration'].sum() // 60} + 25) min. = \VAR{(Gradient['duration'].sum() / (60 ** 2 + 25) * (Samples|length))|round(1)} hours}
 	}\\
 
 	\noindent

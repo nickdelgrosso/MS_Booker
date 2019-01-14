@@ -7,7 +7,7 @@ def df_to_xcalibur_csv(df, bracket=4):
 
 
 def df_to_card_pdf(template_tex, df, filename, batch_id, date, lc_settings, gradient,
-                   post_fields=['Tip Box', 'Concentration Measurement Method', 'Measured Concentration', 'Predicted Sample Amount (ng)']):
+                   post_fields=['Tip Box', 'Concentration Measurement Method', 'Measured Concentration', 'Predicted Sample Amount (ng)', 'LC Used', 'MS Used']):
     comments = dict([el.strip() for el in item.split(':')] for item in df['Comment'][0].split(','))
     samples = [row for _, row in df.iterrows()]
     lc_settings.index = lc_settings.index.str.replace('reEquilibration', '')
