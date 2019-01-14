@@ -55,6 +55,16 @@
 		\scriptsize{\VAR{''.join(LC_Settings.rsplit('\n', maxsplit=2))}}\\
 	}\\
 
+	\adjustbox{minipage=\linewidth}{
+		\begin{tabular}{|p{.8\textwidth}|}
+			\hline
+			\BLOCK{for Field in PostFields}
+				\color{lightgray}{\VAR{Field}}\\
+				\hline
+			\BLOCK{endfor}
+		\end{tabular}
+	}\\
+
 	\vspace{0.5cm}
 	\adjustbox{minipage=[m][6cm][s]{\linewidth}}{
 		\center{\color{gray}Recording Notes}
