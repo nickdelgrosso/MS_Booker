@@ -37,10 +37,12 @@ def render_templated_tex(tex, **options):
     return rendered_tex
 
 
-def pdflatex(tex):
+def pdflatex(tex, **files):
     """
     Returns the pdf bytestring from pdflatex's rendering of the 'tex' string.
     (Auxillary files are stored in temporary directory and deleted.)
+
+    Files (in BytesIO) can be add
     """
     shell = True if sys.platform == 'linux' else False
     with tempfile.TemporaryDirectory() as output_dir:
