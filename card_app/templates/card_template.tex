@@ -5,7 +5,7 @@
 %\settypeblocksize{45mm}{75mm}{*}
 %\setulmargins{5mm}{*}{*}
 %\setlrmargins{5mm}{*}{*}
-\setlrmarginsandblock{1cm}{1cm}{1cm}
+\setlrmarginsandblock{10cm}{1cm}{1cm}
 \setulmarginsandblock{12mm}{10mm}{*}
 \usepackage{xcolor}
 \usepackage{pdflscape}
@@ -30,56 +30,61 @@
 % USES JINJA2 AS TEMPLATING ENGINE.
 
 \begin{document}
-\begin{landscape}
 
 	\noindent
-	\adjustbox{minipage=0.5\textheight,rotate=90,valign=m}{
+	\adjustbox{minipage=\linewidth}{
 		\noindent\LARGE{\textbf{\VAR{Comments.Project}}}\\
-		\VAR{Comments.Researcher} \hfill \textbf{Batch: \VAR{BatchID}}\\
-		\rule{\textwidth}{.3mm}
+		\VAR{Comments.Researcher} \hfill \textbf{\VAR{BatchID}}\\
+
+	}\\
+	\rule{\textwidth}{.3mm}\\
+
+	\adjustbox{minipage=\textwidth,valign=m}{
+		\adjustbox{minipage=\linewidth}{
+			\BLOCK{for name, val in Comments.items()}
+				\BLOCK{if name not in ['Project', 'Researcher']}
+					\textbf{\VAR{name | replace("_", "\_")}}: \VAR{val | replace("_", "\_")} \\
+					\vspace{2mm}
+				\BLOCK{endif}
+			\BLOCK{endfor}
+		}\\
+
+		\adjustbox{minipage=\linewidth}{
+			\scriptsize{\VAR{''.join(LC_Settings.rsplit('\n', maxsplit=2))}}\\
+		}\\
+
+		\vspace{0.5cm}
+		\adjustbox{minipage=[m][6cm][s]{\linewidth}}{
+			\center{\color{gray}Recording Notes}
+		}\\
+
 	}
-	\adjustbox{minipage=0.9\linewidth,valign=m}{
-		\adjustbox{minipage=\textwidth,valign=m}{
-			\adjustbox{minipage=[m][6cm][s]{0.3\linewidth}}{
-		%		    \strut\vspace*{-\baselineskip}\newline
-				\BLOCK{for name, val in Comments.items()}
-					\BLOCK{if name not in ['Project', 'Researcher']}
-						\textbf{\VAR{name | replace("_", "\_")}}: \VAR{val | replace("_", "\_")} \\
-						\vspace{2mm}
-					\BLOCK{endif}
-				\BLOCK{endfor}
-			}
-			\adjustbox{minipage=0.4\linewidth,valign=b}{
-				\strut\vspace*{-\baselineskip}
-				\scriptsize{\VAR{''.join(LC_Settings.rsplit('\n', maxsplit=2))}}\\
-			}
-			\adjustbox{minipage=[m][6cm][s]{0.15\linewidth}}{
-				\center{\color{gray}Recording Notes}
-			}
-		}
-		\vspace{3mm} \\
-		\adjustbox{minipage=\textwidth}{
-			\adjustbox{minipage=0.8\textwidth}{
-				\BLOCK{for sample in Samples}
-					\noindent\tikz\filldraw
-						\BLOCK{if sample['Sample Type'] == "QC"}
-			[fill=gray!40!white, draw=black]
-						\BLOCK{else}
-			[fill=white!40!white, draw=black]
-						\BLOCK{endif}
-			rectangle (0.8cm,1.1em) node[pos=.5] {\VAR{sample.Position}};
-					\BLOCK{if loop.index % 20 == 0}
-						\vspace{1.5mm}\\
-					\BLOCK{endif}
-				\BLOCK{endfor}
-			}
-			\adjustbox{minipage=0.15\linewidth}{
-				\textbf{\VAR{Samples|length} Samples}
-			}
-		}
-	}
-	\adjustbox{minipage=0.03\linewidth,valign=m,rotate=90,raise=-5cm}{
-		\begin{tabular}{|p{1.4cm}|p{1.4cm}|p{1.4cm}|p{1.4cm}|p{1.4cm}|}
+	\vspace{3mm} \\
+
+	\adjustbox{minipage=\linewidth}{
+		\textbf{\VAR{Samples|length} Samples}
+	}\\
+
+	\noindent
+	\adjustbox{minipage=\textwidth}{
+		\BLOCK{for sample in Samples}
+			\noindent\tikz\filldraw
+				\BLOCK{if sample['Sample Type'] == "QC"}
+	[fill=gray!40!white, draw=black]
+				\BLOCK{else}
+	[fill=white!40!white, draw=black]
+				\BLOCK{endif}
+	rectangle (0.8cm,1.1em) node[pos=.5] {\VAR{sample.Position}};
+			\BLOCK{if loop.index % 10 == 0}
+				\vspace{1.5mm}\\
+			\BLOCK{endif}
+		\BLOCK{endfor}
+	}\\
+	\vspace{0.5cm}
+
+	\noindent
+	\adjustbox{minipage=\linewidth}{
+		\begin{tabular}{|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|}
 		 \hline
 		 Created: \textbf{\VAR{Date[:-5] + ' ' + Date[-5:]}} & {\color{lightgray}Planned Start} & {\color{lightgray}Date Queued} & {\color{lightgray}Date Started} & {\color{lightgray}Date Done}\\
 		 \hline
@@ -89,5 +94,5 @@
 	\vspace{1em}\\
 	\raisebox{-4pt}[0pt][0.5\baselineskip]{\small\ScissorHollowRight}\unskip{\tikz \draw [dashed] (0,0) -- (0.9\linewidth,0);}
 
-\end{landscape}
+
 \end{document}
