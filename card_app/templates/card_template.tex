@@ -43,11 +43,13 @@
 			\adjustbox{minipage=[m][6cm][s]{0.3\linewidth}}{
 		%		    \strut\vspace*{-\baselineskip}\newline
 				\BLOCK{for name, val in Comments.items()}
-					\textbf{\VAR{name | replace("_", "\_")}}: \VAR{val | replace("_", "\_")} \\
-					\vspace{2mm}
+					\BLOCK{if name not in ['Project', 'Researcher']}
+						\textbf{\VAR{name | replace("_", "\_")}}: \VAR{val | replace("_", "\_")} \\
+						\vspace{2mm}
+					\BLOCK{endif}
 				\BLOCK{endfor}
 			}
-			\adjustbox{minipage=0.4\linewidth,valign=m}{
+			\adjustbox{minipage=0.4\linewidth,valign=b}{
 				\strut\vspace*{-\baselineskip}
 				\scriptsize{\VAR{''.join(LC_Settings.rsplit('\n', maxsplit=2))}}\\
 			}
