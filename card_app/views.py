@@ -2,6 +2,7 @@ from os import path
 from io import BytesIO
 from datetime import datetime
 from uuid import uuid4
+import zipfile
 from flask import render_template, request, make_response
 import pandas as pd
 from XCaliburMethodReader import load_lc_data, get_lc_gradient, get_lc_settings
@@ -43,10 +44,14 @@ def upload():
 
 @app.route('/download_example', methods=['GET'])
 def download_example():
-    with open(path.join(app.root_path, 'data', 'test.csv')) as f:
-        csv = f.read()
-    response = make_response(csv)
-    response.headers['Content-Disposition'] = "inline; filename='example_sequence.csv"
-    response.mimetype = 'text/csv'
+    f = BytesIO()
+    with zipfile.ZipFile(f, mode='w') as zip:
+        zip.write(path.join(app.root_path, 'data', 'test.csv'), arcname='test.csv')
+        zip.write(path.join(app.root_path, 'data', 'test.meth'), arcname='test.meth')
+    f.seek(0)
+
+    response = make_response(f.read())
+    response.headers['Content-Disposition'] = "inline; filename='example_files.zip"
+    response.mimetype = 'application/zip'
     return response
 
