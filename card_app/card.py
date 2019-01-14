@@ -9,6 +9,7 @@ def df_to_xcalibur_csv(df, bracket=4):
 def df_to_card_pdf(template_tex, df, filename, batch_id, date, lc_settings):
     comments = dict([el.strip() for el in item.split(':')] for item in df['Comment'][0].split(','))
     samples = [row for _, row in df.iterrows()]
+    lc_settings.index = lc_settings.index.str.replace('reEquilibration', '')
     lc_settings = lc_settings.to_latex(bold_rows=True, column_format='rccc', na_rep='', index_names=False)
     tex = latex.render_templated_tex(template_tex, BatchID=batch_id, Date=date.strftime('%d.%m.%Y'), Filename=filename,
                                      Comments=comments, Samples=samples, LC_Settings=lc_settings)
