@@ -42,11 +42,14 @@ def pdflatex(tex, **files):
     Returns the pdf bytestring from pdflatex's rendering of the 'tex' string.
     (Auxillary files are stored in temporary directory and deleted.)
 
-    Files (in BytesIO) can be add
+    Files (in BytesIO) can be added to the temporary directory.  The keyword names will be the filename.
     """
     shell = True if sys.platform == 'linux' else False
     with tempfile.TemporaryDirectory() as output_dir:
-        subprocess.run(r'pdflatex -output-directory {dir}'.format(dir=output_dir), input=tex.encode(), shell=shell)
+        for name in files:
+            with open(path.join(output_dir, name), 'wb') as f:
+                f.write(files[name])
+        subprocess.run(r'pdflatex -output-directory {dir} -include-directory={dir}'.format(dir=output_dir), input=tex.encode(), shell=shell)
         with open(path.join(output_dir, 'texput.pdf'), 'rb') as f:
             pdf = f.read()
             return pdf

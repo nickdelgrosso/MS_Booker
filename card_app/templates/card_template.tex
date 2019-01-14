@@ -29,6 +29,7 @@
 
 % USES JINJA2 AS TEMPLATING ENGINE.
 
+
 \begin{document}
 
 	\noindent
@@ -52,8 +53,14 @@
 
 	\vspace{.5cm}
 	\adjustbox{minipage=\linewidth}{
-		\scriptsize{\VAR{''.join(LC_Settings.rsplit('\n', maxsplit=2))}}\\
-	}\\
+		\tiny{\VAR{''.join(LC_Settings.rsplit('\n', maxsplit=2))}}
+		\includegraphics[width=0.2\textwidth, height=50px]{gradient.png}
+	}
+
+
+%	\begin{figure}
+
+%	\end{figure}
 
 	\adjustbox{minipage=\linewidth}{
 		\begin{tabular}{|p{.8\textwidth}|}
@@ -71,7 +78,11 @@
 	}\\
 
 	\adjustbox{minipage=\linewidth}{
-		\textbf{\VAR{Samples|length} Samples, \VAR{RunTime} hours.}
+		\textbf{
+		\VAR{Samples | selectattr('Sample Type', 'equalto', 'Unknown') | list | length} Samples,
+		\VAR{Samples | selectattr('Sample Type', 'equalto', 'QC') | list | length} Washes,
+		\VAR{RunTime} hours.
+		}
 	}\\
 
 	\noindent

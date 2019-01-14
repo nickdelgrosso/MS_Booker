@@ -1,4 +1,7 @@
 from . import latex
+import matplotlib
+import matplotlib.pyplot as plt
+from io import BytesIO
 
 
 def df_to_xcalibur_csv(df, bracket=4):
@@ -18,5 +21,17 @@ def df_to_card_pdf(template_tex, df, filename, batch_id, date, lc_settings, grad
     tex = latex.render_templated_tex(template_tex, BatchID=batch_id, Date=date.strftime('%d.%m.%Y'), Filename=filename,
                                      Comments=comments, Samples=samples, LC_Settings=lc_settings, Gradient=gradient,
                                      PostFields=post_fields, RunTime=run_time)
-    pdf = latex.pdflatex(tex=tex)
+
+
+    gradient['Time (min)'] = gradient['duration'].cumsum() / 60.
+
+    matplotlib.rc('xtick', labelsize=20)
+    matplotlib.rc('ytick', labelsize=30)
+    plt.plot(gradient['Time (min)'], gradient['percentB'], 'k', linewidth=10.)
+    plt.ylim([0, 100])
+    plt.ylabel('Percent B')
+    figfile = BytesIO()
+    plt.savefig(figfile, format='png')
+    figfile.seek(0)
+    pdf = latex.pdflatex(tex=tex, **{'gradient.png': figfile.read()})
     return pdf
