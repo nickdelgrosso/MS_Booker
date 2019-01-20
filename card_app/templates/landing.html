@@ -25,106 +25,171 @@
         <div class="hero-body">
             <div class="container">
                 <div class="container">
-                    <h1 id="title" class="title" style="white-space: nowrap;">
+                    <p id="title is-1" class="title" style="white-space: nowrap;">
                         Mass Spec Booking, Simplified.
-                    </h1>
-                    <h2 class="subtitle">
+                    </p>
+                    <p class="subtitle">
                         Submit a sequence, get a Queue card.
-                    </h2>
+                    </p>
                 </div>
 
                 <br>
+                <br>
 
-                <div class="level">
-                    <form action="/upload" method="POST" enctype="multipart/form-data">
-                        <div class="level-left">
-                            <p class="control level-item">
-                                <div class="file is-primary">
-                                  <label class="file-label">
-                                    <input class="file-input" type="file" name="csv">
-                                    <span class="file-cta">
-                                      <span class="file-icon">
-                                        <i class="fas fa-file-upload"></i>
-                                      </span>
-                                      <span class="file-label">
-                                        Upload CSV Sequence
-                                      </span>
-                                    </span>
-                                  </label>
-                                </div>
-                            </p>
-                            <p class="control level-item">
-                                <div class="file is-primary">
-                                  <label class="file-label">
-                                    <input class="file-input" type="file" name="method">
-                                    <span class="file-cta">
-                                      <span class="file-icon">
-                                        <i class="fas fa-file-upload"></i>
-                                      </span>
-                                      <span class="file-label">
-                                        Upload Method File
-                                      </span>
-                                    </span>
-                                  </label>
-                                </div>
-                            </p>
-                            <p class="control level-item">
-                                <div class="control is-centered">
-                                    <button id="submitbutton" type="submit" class="button">Generate PDF</button>
-                                </div>
-                            </p>
-                        </div>
-                    </form>
-
-                    <form action="/download_example" method="GET">
-                        <div class="level-right">
-                            <div class="control">
-                                <button type="submit" class="button is-grey-light is-info"><i class="fas fa-download"></i>.  Get Example Sequence</button>
+                <div class="container">
+                    <h3 class="title is-4">Recording Session</h3>
+                    <div class="level">
+                        <form action="/upload" method="POST" enctype="multipart/form-data">
+                            <div class="level-left">
+                                <p class="control level-item">
+                                    <div class="file is-primary">
+                                      <label class="file-label">
+                                        <input class="file-input" type="file" name="csv">
+                                        <span class="file-cta">
+                                          <span class="file-icon">
+                                            <i class="fas fa-file-upload"></i>
+                                          </span>
+                                          <span class="file-label">
+                                            Upload CSV Sequence
+                                          </span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                </p>
+                                <p class="control level-item">
+                                    <div class="file is-primary">
+                                      <label class="file-label">
+                                        <input class="file-input" type="file" name="method">
+                                        <span class="file-cta">
+                                          <span class="file-icon">
+                                            <i class="fas fa-file-upload"></i>
+                                          </span>
+                                          <span class="file-label">
+                                            Upload Method File
+                                          </span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                </p>
+                                <p class="control level-item">
+                                    <div class="control is-centered">
+                                        <button id="submitbutton" type="submit" class="button">Generate PDF</button>
+                                    </div>
+                                </p>
                             </div>
+                        </form>
+
+                        <form action="/download_example" method="GET">
+                            <div class="level-right">
+                                <div class="control">
+                                    <button type="submit" class="button is-grey-light is-info"><i class="fas fa-download"></i>.  Get Example Sequence</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+
+                    <br>
+
+                    <div class="box">
+                        <div class="content">
+                            <p>
+                            <strong>Project Metadata:</strong>
+                            For variables that don't change at all during the experiment.  Goes in the "Comment" Column as comma-seperated "key: value" records.  (e.g. "Project: Cure for Cancer, Researcher: Normon Osborne")
+                            </p>
+                        </div>
+                        Required:
+                        <span class="tag is-dark">Project</span>
+                        <span class="tag is-dark">Researcher</span>
+                        <span class="tag is-dark">Biosafety Form</span>
+                        <br>
+                        Suggested:
+                        <span class="tag is-light">LC</span>
+                        <span class="tag is-light">Column</span>
+                        <span class="tag is-light">MS Model</span>
+                        <span class="tag is-light">Acquisition Mode</span>
+                        <span class="tag is-light">Peptide Labeling Method</span>
+                        <span class="tag is-light">Fractionation Method</span>
+                        <span class="tag is-light">Organism</span>
+                    </div>
+
+                    <div class="box">
+                        <div class="content">
+                            <p>
+                            <strong>Experimental Conditions:</strong>
+                            <!--<br>-->
+                                For variables that can be different between samples in your project.  Thermo supports up to 5 Custom Condition Columns for documenting your experiment's design. Just prefix the column name with L and a number. (e.g. "L1 Condition", "L3 Species")
+                            </p>
+                        </div>
+                        Ideas:
+                        <span class="tag is-light">L# Species</span>
+                        <span class="tag is-light">L# Fraction</span>
+                        <span class="tag is-light">L# Subject</span>
+                        <span class="tag is-light">L# Replicate</span>
+                        <span class="tag is-light">L# Condition</span>
+                        <span class="tag is-light">L# Sample</span>
+                    </div>
+
+                </div>
+
+                <br>
+                <br>
+
+                <div class="container">
+                    <h4 class="title is-4">Planned Instrument Maintenance/Cleaning</h4>
+
+                    <form action="/cleaning_card", method="POST">
+                        <div class="level">
+                            <div class="field">
+                                <div class="label"> Machine Name</div>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="QX1">
+                                </div>
+                                <p class="help">For MS or LC.</p>
+                            </div>
+                            <div class="field">
+                                <div class="label">Maintenance Type</div>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Cleaning">
+                                </div>
+                                <p class="help">Cleaning, Bake out, etc.</p>
+                            </div>
+
+                            <div class="field">
+                                <div class="label">Predicted Duration (hours)</div>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="6">
+                                </div>
+                                <p class="help">Between maintenance start and next recording start.</p>
+                            </div>
+                            <div class="field">
+                                <div class="label">Job Requested By:</div>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Christian">
+                                </div>
+                                <p class="help">Your name here.</p>
+                            </div>
+                            <div class="field">
+                                <div class="label">Job Accepted By:</div>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Igor">
+                                </div>
+                                <p class="help">(Optional)</p>
+                            </div>
+
+                            <p class="control">
+                                    <div class="control is-centered">
+                                        <button id="submitbutton" type="submit" class="button" disabled>Generate PDF</button>
+                                    </div>
+                            </p>
+
                         </div>
                     </form>
 
                 </div>
 
-                <br>
 
-                <div class="box">
-                    <div class="content">
-                        <p>
-                        <strong>Project Metadata:</strong>
-                        For variables that don't change at all during the experiment.  Goes in the "Comment" Column as comma-seperated "key: value" records.  (e.g. "Project: Cure for Cancer, Researcher: Normon Osborne")
-                        </p>
-                    </div>
-                    Required:
-                    <span class="tag is-dark">Project</span>
-                    <span class="tag is-dark">Researcher</span>
-                    <span class="tag is-dark">Biosafety Form</span>
-                    <br>
-                    Suggested:
-                    <span class="tag is-light">LC</span>
-                    <span class="tag is-light">Column</span>
-                    <span class="tag is-light">MS Model</span>
-                    <span class="tag is-light">Acquisition Mode</span>
-                    <span class="tag is-light">Peptide Labeling Method</span>
-                    <span class="tag is-light">Fractionation Method</span>
-                    <span class="tag is-light">Organism</span>
-                </div>
-                <div class="box">
-                    <div class="content">
-                        <p>
-                        <strong>Experimental Conditions:</strong>
-                        <!--<br>-->
-                            For variables that can be different between samples in your project.  Thermo supports up to 5 Custom Condition Columns for documenting your experiment's design. Just prefix the column name with L and a number. (e.g. "L1 Condition", "L3 Species")
-                        </p>
-                    </div>
-                    Ideas:
-                    <span class="tag is-light">L# Species</span>
-                    <span class="tag is-light">L# Fraction</span>
-                    <span class="tag is-light">L# Subject</span>
-                    <span class="tag is-light">L# Replicate</span>
-                    <span class="tag is-light">L# Condition</span>
-                    <span class="tag is-light">L# Sample</span>
-                </div>
 
             </div>
 
