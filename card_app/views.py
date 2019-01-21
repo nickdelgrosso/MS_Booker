@@ -6,16 +6,29 @@ import zipfile
 from flask import render_template, request, make_response
 import pandas as pd
 from XCaliburMethodReader import load_lc_data, get_lc_gradient, get_lc_settings
+from flask_wtf import FlaskForm
+from wtforms import StringField, FloatField
+from wtforms.validators import DataRequired
 from .card import df_to_card_pdf
+from . import latex
 from . import app
 
 
 template_file = path.join(app.root_path, 'templates', 'card_template.tex')
+cleaning_template_file = path.join(app.root_path, 'templates', 'cleaning_card_template.tex')
+
+
+class CleaningForm(FlaskForm):
+    instrument = StringField('Machine Name', validators=[DataRequired()], description='For MS or LC.')
+    maintenance_type = StringField('Maintenance Type', validators=[DataRequired()], description='Cleaning, Bake out, etc.')
+    predicted_duration = FloatField('Predicted Duration (hours)', validators=[DataRequired()], description='Between maintenance start and next recording start.')
+    submitted_by = StringField('Job Requested By', validators=[DataRequired()], description='Your name here.')
 
 
 @app.route('/')
 def index():
-    return render_template('landing.html')
+    cleaning_form = CleaningForm()
+    return render_template('landing.html', cleaning_form=cleaning_form)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -55,3 +68,17 @@ def download_example():
     response.mimetype = 'application/zip'
     return response
 
+
+@app.route('/cleaning_card', methods=['GET', 'POST'])
+def upload_cleaning_card():
+    form = CleaningForm()
+    date = datetime.now().strftime('%d.%m.%Y')
+
+    with open(cleaning_template_file) as f:
+        tex = latex.render_templated_tex(tex=f.read(), form=form, Date=date, PostFields=['Inject Time (ms)', 'NL', 'Calibration', 'Transmission Score'])
+
+    pdf = latex.pdflatex(tex=tex)
+    response = make_response(pdf)
+    response.headers['Content-Disposition'] = "inline; filename='cleaning.pdf"
+    response.mimetype = 'application/pdf'
+    return response

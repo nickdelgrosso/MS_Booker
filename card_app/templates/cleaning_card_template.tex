@@ -1,0 +1,86 @@
+\documentclass[11pt,a4paper]{memoir}
+
+%\setstocksize{55mm}{85mm} % UK Stock size
+%\setpagecc{55mm}{85mm}{*}
+%\settypeblocksize{45mm}{75mm}{*}
+%\setulmargins{5mm}{*}{*}
+%\setlrmargins{5mm}{*}{*}
+\setlrmarginsandblock{10cm}{1cm}{1cm}
+\setulmarginsandblock{12mm}{10mm}{*}
+\usepackage{xcolor}
+\usepackage{pdflscape}
+
+%\setheadfoot{0.1pt}{0.1pt}
+%\setheaderspaces{1pt}{*}{*}
+%\usepackage{fontspec}
+%\setmainfont[]{EBGaramond12-Regular.ttf} 
+
+\checkandfixthelayout[fixed]
+
+\usepackage{dashrule}
+\usepackage{tikz}
+\usepackage{bbding}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage[most]{tcolorbox}
+
+\pagestyle{empty}
+
+\renewcommand{\arraystretch}{1.3}
+
+% USES JINJA2 AS TEMPLATING ENGINE.
+
+
+\begin{document}
+
+	\begin{tcolorbox}[breakable,colback=white,colframe=cyan,width=\dimexpr\textwidth+12mm\relax,enlarge left by=-6mm]
+
+	\noindent
+	\adjustbox{minipage=\linewidth}{
+		\noindent\LARGE{\textbf{Maintenance: \VAR{form.maintenance_type.data}}}\\
+		\VAR{form.instrument.data} \hfill \textbf{\VAR{form.submitted_by.data}}\\
+
+	}\\
+	\rule{\textwidth}{.3mm}\\
+
+
+	\vspace{0.5cm}
+	\adjustbox{minipage=[m][8cm][s]{\linewidth}}{
+		\center{\color{gray}Maintenance Notes}
+	}\\
+
+	\adjustbox{minipage=\linewidth}{
+		\begin{tabular}{|p{.55\textwidth}|p{.35\textwidth}|}
+			\hline
+			\color{lightgray}{Performed By (1):} & \color{lightgray}{Performed By (2):}\\
+			\hline
+			\color{lightgray}{Source Used:} & ---\\
+			\hline
+			\BLOCK{for Field in PostFields}
+				\color{lightgray}{Measured \VAR{Field}}: & \color{lightgray}{Target:}\\
+				\hline
+			\BLOCK{endfor}
+		\end{tabular}
+	}\\
+
+	\vspace{1em}
+	\adjustbox{minipage=\linewidth}{
+		\textbf{Predicted Duration: \VAR{form.predicted_duration.data} hours.}
+	}\\
+
+	\noindent
+	\adjustbox{minipage=\linewidth}{
+		\begin{tabular}{|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|}
+		 \hline
+		 Created: \textbf{\VAR{Date[:-5] + ' ' + Date[-5:]}} & {\color{lightgray}Planned Start} & {\color{lightgray}Date Queued} & {\color{lightgray}Date Started} & {\color{lightgray}Date Done}\\
+		 \hline
+		\end{tabular}
+	}
+
+	\end{tcolorbox}
+
+	\vspace{1em}\\
+	\raisebox{-4pt}[0pt][0.5\baselineskip]{\small\ScissorHollowRight}\unskip{\tikz \draw [dashed] (0,0) -- (0.9\linewidth,0);}
+
+
+\end{document}

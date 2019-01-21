@@ -140,47 +140,42 @@
                     <h4 class="title is-4">Planned Instrument Maintenance/Cleaning</h4>
 
                     <form action="/cleaning_card", method="POST">
+                        {{ cleaning_form.csrf_token }}
+
                         <div class="level">
                             <div class="field">
-                                <div class="label"> Machine Name</div>
+                                <div class="label">{{ cleaning_form.instrument.label }}</div>
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="QX1">
+                                    {{ cleaning_form.instrument(class="input") }}
                                 </div>
-                                <p class="help">For MS or LC.</p>
+                                <p class="help">{{ cleaning_form.instrument.description }}</p>
                             </div>
                             <div class="field">
-                                <div class="label">Maintenance Type</div>
+                                <div class="label">{{ cleaning_form.maintenance_type.label }}</div>
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Cleaning">
+                                    {{ cleaning_form.maintenance_type(class="input") }}
                                 </div>
-                                <p class="help">Cleaning, Bake out, etc.</p>
+                                <p class="help">{{ cleaning_form.maintenance_type.description }}</p>
                             </div>
 
                             <div class="field">
-                                <div class="label">Predicted Duration (hours)</div>
+                                <div class="label">{{ cleaning_form.predicted_duration.label }}</div>
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="6">
+                                    {{ cleaning_form.predicted_duration(class="input") }}
                                 </div>
-                                <p class="help">Between maintenance start and next recording start.</p>
+                                <p class="help">{{ cleaning_form.predicted_duration.description }}</p>
                             </div>
                             <div class="field">
-                                <div class="label">Job Requested By:</div>
+                                <div class="label">{{ cleaning_form.submitted_by.label }}</div>
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Christian">
+                                    {{ cleaning_form.submitted_by(class='input') }}
                                 </div>
-                                <p class="help">Your name here.</p>
-                            </div>
-                            <div class="field">
-                                <div class="label">Job Accepted By:</div>
-                                <div class="control">
-                                    <input class="input" type="text" placeholder="Igor">
-                                </div>
-                                <p class="help">(Optional)</p>
+                                <p class="help">{{ cleaning_form.submitted_by.description }} </p>
                             </div>
 
                             <p class="control">
                                     <div class="control is-centered">
-                                        <button id="submitbutton" type="submit" class="button" disabled>Generate PDF</button>
+                                        <button id="submitbutton" type="submit" class="button">Generate PDF</button>
                                     </div>
                             </p>
 
