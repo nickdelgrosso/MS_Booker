@@ -6,23 +6,13 @@ import zipfile
 from flask import render_template, request, make_response
 import pandas as pd
 from XCaliburMethodReader import load_lc_data, get_lc_gradient, get_lc_settings
-from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField
-from wtforms.validators import DataRequired
 from .card import df_to_card_pdf
 from . import latex
 from . import app
-
+from .forms import CleaningForm
 
 template_file = path.join(app.root_path, 'templates', 'card_template.tex')
 cleaning_template_file = path.join(app.root_path, 'templates', 'cleaning_card_template.tex')
-
-
-class CleaningForm(FlaskForm):
-    instrument = StringField('Machine Name', validators=[DataRequired()], description='For MS or LC.')
-    maintenance_type = StringField('Maintenance Type', validators=[DataRequired()], description='Cleaning, Bake out, etc.')
-    predicted_duration = FloatField('Predicted Duration (hours)', validators=[DataRequired()], description='Between maintenance start and next recording start.')
-    submitted_by = StringField('Job Requested By', validators=[DataRequired()], description='Your name here.')
 
 
 @app.route('/')
