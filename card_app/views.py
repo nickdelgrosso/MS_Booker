@@ -3,8 +3,6 @@ from io import BytesIO
 from datetime import datetime
 import zipfile
 from flask import render_template, request, make_response
-import pandas as pd
-from XCaliburMethodReader import load_lc_data, get_lc_gradient, get_lc_settings
 from . import latex
 from . import app
 from . import utils
@@ -24,26 +22,13 @@ def index():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     filename, csv_data = request.files['csv'].filename, request.files['csv'].read()
-    df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
-    date = datetime.now()
-
     method_filename, method_data = request.files['method'].filename, request.files['method'].read()
-    lc_data = load_lc_data(BytesIO(method_data))
-    lc_settings = get_lc_settings(lc_data)
-    gradient = get_lc_gradient(lc_data)
 
     with open(template_file) as f:
         template_tex = f.read()
 
-
-    sequence = Sequence(
-        filename=filename,
-        date=date,
-        lc_settings=lc_settings,
-        gradient=gradient,
-        comments=dict([el.strip() for el in item.split(':')] for item in df['Comment'][0].split(',')),
-        samples=[row for _, row in df.iterrows()],
-        table=df,
+    sequence = Sequence.from_xcalibur_csv_and_method(
+        filename=filename, csv_data=csv_data, method_filename=method_filename, method_data=method_data,
     )
 
     post_fields = ['Tip Box', 'Concentration Measurement Method', 'Measured Concentration', 'Predicted Sample Amount (ng)', 'LC Used', 'MS Used']
