@@ -5,6 +5,7 @@ import sys
 import jinja2
 import subprocess
 import tempfile
+import os
 from os import path
 from io import BytesIO
 from PyPDF2 import PdfFileMerger
@@ -37,7 +38,7 @@ def render_templated_tex(tex, **options):
     return rendered_tex
 
 
-def pdflatex(tex, **files):
+def pdflatex(tex, figures):
     """
     Returns the pdf bytestring from pdflatex's rendering of the 'tex' string.
     (Auxillary files are stored in temporary directory and deleted.)
@@ -46,14 +47,15 @@ def pdflatex(tex, **files):
     """
     shell = True if sys.platform == 'linux' else False
     with tempfile.TemporaryDirectory() as output_dir:
-        for name in files:
-            with open(name, 'wb') as f:
-            # with open(path.join(output_dir, name), 'wb') as f:
-                f.write(files[name])
+        for filename, figure in figures.items():
+            figure.savefig(filename)
         subprocess.run(r'pdflatex -output-directory {dir} -include-directory={dir}'.format(dir=output_dir), input=tex.encode(), shell=shell)
         with open(path.join(output_dir, 'texput.pdf'), 'rb') as f:
             pdf = f.read()
-            return pdf
+
+        for filename in figures:
+            os.remove(filename)
+        return pdf
 
 
 def merge_pdfs(*pdf_data):
