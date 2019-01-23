@@ -75,8 +75,8 @@
 	\adjustbox{minipage=\linewidth}{
 		\textbf{
 		\VAR{Sequence.samples | selectattr('Sample Type', 'equalto', 'Unknown') | list | length} Samples,
-		\VAR{Sequence.samples | selectattr('Sample Type', 'equalto', 'QC') | list | length} Washes,
-		\VAR{Sequence.run_time} hours.
+		\VAR{Sequence.samples | selectattr('Sample Type', 'equalto', 'QC') | list | length} Washes:
+		\huge{\textbf{\VAR{(Sequence.run_time / 24) | round(2)} Days}}\normalsize
 		}
 	}\\
 
@@ -95,16 +95,21 @@
 			\BLOCK{endif}
 		\BLOCK{endfor}
 	}\\
+
 	\vspace{0.5cm}
+
+
 
 	\noindent
 	\adjustbox{minipage=\linewidth}{
 		\begin{tabular}{|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|}
 		 \hline
-		 Created: \textbf{\VAR{Sequence.date.strftime('%d.%m.%Y').replace('.', ' ')}} & {\color{lightgray}Planned Start} & {\color{lightgray}Date Queued} & {\color{lightgray}Date Started} & {\color{lightgray}Date Done}\\
+		 Created: \textbf{\VAR{Sequence.date.strftime('%d.%m')}} & {\color{lightgray}Planned Start} & {\color{lightgray}Date Queued} & {\color{lightgray}Date Started} & {\color{lightgray}Date Done}\\
 		 \hline
 		\end{tabular}
-	}
+	}\\
+
+	\large Short-Term Queue Time (2 Machines): \textbf{\VAR{(Sequence.run_time / 24 / 2) | round(2)} Days}} \normalsize
 
 	\vspace{1em}\\
 	\raisebox{-4pt}[0pt][0.5\baselineskip]{\small\ScissorHollowRight}\unskip{\tikz \draw [dashed] (0,0) -- (0.9\linewidth,0);}
