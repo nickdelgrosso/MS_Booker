@@ -9,23 +9,13 @@ def df_to_xcalibur_csv(df, bracket=4):
     return 'Bracket Type={}{}\n{}'.format(bracket, ',' * (df.shape[1] - 1), df.to_csv(index=False))
 
 
-def df_to_card_pdf(template_tex, df, filename, batch_id, date, lc_settings, gradient,
-                   post_fields=['Tip Box', 'Concentration Measurement Method', 'Measured Concentration', 'Predicted Sample Amount (ng)', 'LC Used', 'MS Used']):
-
-    seq = Sequence(
-        filename=filename,
-        date=date,
-        lc_settings=lc_settings,
-        gradient=gradient,
-        comments=dict([el.strip() for el in item.split(':')] for item in df['Comment'][0].split(',')),
-        samples=[row for _, row in df.iterrows()],
-        table=df,
-    )
-
-    tex = latex.render_templated_tex(template_tex, Sequence=seq, PostFields=post_fields)
+def df_to_card_pdf(template_tex, sequence, post_fields=()):
 
 
-    fig = utils.plot_gradient(gradient)
+    tex = latex.render_templated_tex(template_tex, Sequence=sequence, PostFields=post_fields)
+
+
+    fig = utils.plot_gradient(sequence.gradient)
     figfile = BytesIO()
     fig.savefig(figfile, format='png')
     figfile.seek(0)

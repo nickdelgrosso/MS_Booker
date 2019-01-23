@@ -10,6 +10,7 @@ from .card import df_to_card_pdf
 from . import latex
 from . import app
 from .forms import CleaningForm
+from .models import Sequence
 
 template_file = path.join(app.root_path, 'templates', 'card_template.tex')
 cleaning_template_file = path.join(app.root_path, 'templates', 'cleaning_card_template.tex')
@@ -36,8 +37,19 @@ def upload():
     with open(template_file) as f:
         template_tex = f.read()
 
-    pdf = df_to_card_pdf(template_tex=template_tex, df=df, filename=filename, batch_id=batch_id, date=date,
-                         lc_settings=lc_settings, gradient=gradient)
+
+    seq = Sequence(
+        filename=filename,
+        date=date,
+        lc_settings=lc_settings,
+        gradient=gradient,
+        comments=dict([el.strip() for el in item.split(':')] for item in df['Comment'][0].split(',')),
+        samples=[row for _, row in df.iterrows()],
+        table=df,
+    )
+
+    post_fields = ['Tip Box', 'Concentration Measurement Method', 'Measured Concentration', 'Predicted Sample Amount (ng)', 'LC Used', 'MS Used']
+    pdf = df_to_card_pdf(template_tex=template_tex, sequence=seq, post_fields=post_fields)
 
     response = make_response(pdf)
     response.headers['Content-Disposition'] = "inline; filename='booking.pdf"
