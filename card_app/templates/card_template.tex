@@ -34,8 +34,8 @@
 
 	\noindent
 	\adjustbox{minipage=\linewidth}{
-		\noindent\LARGE{\textbf{\VAR{Comments.Project}}}\\
-		\VAR{Comments.Researcher} \hfill \textbf{\VAR{BatchID}}\\
+		\noindent\LARGE{\textbf{\VAR{Sequence.comments.Project}}}\\
+		\VAR{Sequence.comments.Researcher} \hfill \textbf{\VAR{Sequence.batch_id}}\\
 
 	}\\
 	\rule{\textwidth}{.3mm}\\
@@ -43,7 +43,7 @@
 
 	\adjustbox{minipage=\linewidth}{
 		\begin{tabular}{rl}
-			\BLOCK{for name, val in Comments.items()}
+			\BLOCK{for name, val in Sequence.comments.items()}
 				\BLOCK{if name not in ['Project', 'Researcher']}
 					\textbf{\color{gray}{\VAR{name | replace("_", "\_")}}} & \VAR{val | replace("_", "\_")} \\
 				\BLOCK{endif}
@@ -53,7 +53,7 @@
 
 	\vspace{.5cm}
 	\adjustbox{minipage=\linewidth}{
-		\tiny{\VAR{''.join(LC_Settings.to_latex(bold_rows=True, column_format='rccc', na_rep='', index_names=False).rsplit('\n', maxsplit=2))}}
+		\tiny{\VAR{''.join(Sequence.lc_settings.to_latex(bold_rows=True, column_format='rccc', na_rep='', index_names=False).rsplit('\n', maxsplit=2))}}
 		\includegraphics[width=0.2\textwidth, height=50px]{gradient.png}
 	}
 
@@ -79,15 +79,15 @@
 
 	\adjustbox{minipage=\linewidth}{
 		\textbf{
-		\VAR{Samples | selectattr('Sample Type', 'equalto', 'Unknown') | list | length} Samples,
-		\VAR{Samples | selectattr('Sample Type', 'equalto', 'QC') | list | length} Washes,
-		\VAR{RunTime} hours.
+		\VAR{Sequence.samples | selectattr('Sample Type', 'equalto', 'Unknown') | list | length} Samples,
+		\VAR{Sequence.samples | selectattr('Sample Type', 'equalto', 'QC') | list | length} Washes,
+		\VAR{Sequence.run_time} hours.
 		}
 	}\\
 
 	\noindent
 	\adjustbox{minipage=\textwidth}{
-		\BLOCK{for sample in Samples}
+		\BLOCK{for sample in Sequence.samples}
 			\noindent\tikz\filldraw
 				\BLOCK{if sample['Sample Type'] == "QC"}
 	[fill=gray!40!white, draw=black]
@@ -106,7 +106,7 @@
 	\adjustbox{minipage=\linewidth}{
 		\begin{tabular}{|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|}
 		 \hline
-		 Created: \textbf{\VAR{Date.strftime('%d.%m.%Y').replace('.', ' ')}} & {\color{lightgray}Planned Start} & {\color{lightgray}Date Queued} & {\color{lightgray}Date Started} & {\color{lightgray}Date Done}\\
+		 Created: \textbf{\VAR{Sequence.date.strftime('%d.%m.%Y').replace('.', ' ')}} & {\color{lightgray}Planned Start} & {\color{lightgray}Date Queued} & {\color{lightgray}Date Started} & {\color{lightgray}Date Done}\\
 		 \hline
 		\end{tabular}
 	}

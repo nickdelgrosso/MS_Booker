@@ -22,10 +22,7 @@ def df_to_card_pdf(template_tex, df, filename, batch_id, date, lc_settings, grad
         table=df,
     )
 
-    tex = latex.render_templated_tex(template_tex, BatchID=seq.batch_id, Date=seq.date,
-            Filename=seq.filename, Comments=seq.comments, Samples=seq.samples, LC_Settings=seq.lc_settings,
-            Gradient=seq.gradient, PostFields=post_fields, RunTime=seq.run_time
-                                     )
+    tex = latex.render_templated_tex(template_tex, Sequence=seq, PostFields=post_fields)
 
 
     fig = utils.plot_gradient(gradient)
