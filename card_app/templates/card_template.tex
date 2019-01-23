@@ -34,8 +34,8 @@
 
 	\noindent
 	\adjustbox{minipage=\linewidth}{
-		\noindent\LARGE{\textbf{\VAR{Sequence.comments.Project}}}\\
-		\VAR{Sequence.comments.Researcher} \hfill \textbf{\VAR{Sequence.batch_id}}\\
+		\Huge{\textbf{\VAR{Sequence.comments.Researcher}}} \hfill \normalsize{\VAR{Sequence.batch_id}}\\
+		\noindent\Large{\VAR{Sequence.comments.Project}}\\
 
 	}\\
 	\rule{\textwidth}{.3mm}\\
@@ -56,11 +56,6 @@
 		\tiny{\VAR{''.join(Sequence.lc_settings.to_latex(bold_rows=True, column_format='rccc', na_rep='', index_names=False).rsplit('\n', maxsplit=2))}}
 		\includegraphics[width=0.2\textwidth, height=50px]{gradient.png}
 	}
-
-
-%	\begin{figure}
-
-%	\end{figure}
 
 	\adjustbox{minipage=\linewidth}{
 		\begin{tabular}{|p{.8\textwidth}|}
