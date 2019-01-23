@@ -22,3 +22,9 @@ class Sequence:
                     len(df[df['Sample Type'] == 'QC']) * (15 + 30))) / 60.
         return dur
 
+    @staticmethod
+    def to_xcalibur_csv(df, bracket=4):
+        """
+        Returns an XCalibur-formatted csv as a string (with 'bracket' put in the header), given a pandas DataFrame.
+        """
+        return 'Bracket Type={}{}\n{}'.format(bracket, ',' * (df.shape[1] - 1), df.to_csv(index=False))
