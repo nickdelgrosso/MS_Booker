@@ -1,14 +1,13 @@
 from os import path
 from io import BytesIO
 from datetime import datetime
-from uuid import uuid4
 import zipfile
 from flask import render_template, request, make_response
 import pandas as pd
 from XCaliburMethodReader import load_lc_data, get_lc_gradient, get_lc_settings
-from .card import df_to_card_pdf
 from . import latex
 from . import app
+from . import utils
 from .forms import CleaningForm
 from .models import Sequence
 
@@ -26,7 +25,6 @@ def index():
 def upload():
     filename, csv_data = request.files['csv'].filename, request.files['csv'].read()
     df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
-    batch_id = str(uuid4())[:5].upper()
     date = datetime.now()
 
     method_filename, method_data = request.files['method'].filename, request.files['method'].read()
@@ -38,7 +36,7 @@ def upload():
         template_tex = f.read()
 
 
-    seq = Sequence(
+    sequence = Sequence(
         filename=filename,
         date=date,
         lc_settings=lc_settings,
@@ -49,7 +47,10 @@ def upload():
     )
 
     post_fields = ['Tip Box', 'Concentration Measurement Method', 'Measured Concentration', 'Predicted Sample Amount (ng)', 'LC Used', 'MS Used']
-    pdf = df_to_card_pdf(template_tex=template_tex, sequence=seq, post_fields=post_fields)
+
+    tex = latex.render_templated_tex(template_tex, Sequence=sequence, PostFields=post_fields)
+    fig = utils.plot_gradient(sequence.gradient)
+    pdf = latex.pdflatex(tex=tex, figures={'gradient.png': fig})
 
     response = make_response(pdf)
     response.headers['Content-Disposition'] = "inline; filename='booking.pdf"

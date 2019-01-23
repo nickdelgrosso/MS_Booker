@@ -7,6 +7,4 @@ app = Flask(__name__)
 
 app.config.from_object(config.BaseConfig)
 
-from . import latex
-from . import card
 from . import views
