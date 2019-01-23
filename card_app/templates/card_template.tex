@@ -53,7 +53,7 @@
 
 	\vspace{.5cm}
 	\adjustbox{minipage=\linewidth}{
-		\tiny{\VAR{''.join(LC_Settings.rsplit('\n', maxsplit=2))}}
+		\tiny{\VAR{''.join(LC_Settings.to_latex(bold_rows=True, column_format='rccc', na_rep='', index_names=False).rsplit('\n', maxsplit=2))}}
 		\includegraphics[width=0.2\textwidth, height=50px]{gradient.png}
 	}
 
@@ -106,7 +106,7 @@
 	\adjustbox{minipage=\linewidth}{
 		\begin{tabular}{|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|p{1.6cm}|}
 		 \hline
-		 Created: \textbf{\VAR{Date[:-5] + ' ' + Date[-5:]}} & {\color{lightgray}Planned Start} & {\color{lightgray}Date Queued} & {\color{lightgray}Date Started} & {\color{lightgray}Date Done}\\
+		 Created: \textbf{\VAR{Date.strftime('%d.%m.%Y').replace('.', ' ')}} & {\color{lightgray}Planned Start} & {\color{lightgray}Date Queued} & {\color{lightgray}Date Started} & {\color{lightgray}Date Done}\\
 		 \hline
 		\end{tabular}
 	}
