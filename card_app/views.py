@@ -31,7 +31,7 @@ def upload():
         filename=filename, csv_data=csv_data, method_filename=method_filename, method_data=method_data,
     )
 
-    post_fields = ['Tip Box', '',
+    post_fields = ['Tip Box Name', '',  # Putting a space will make a double-width column
                    'Concentration Measurement Method', '',
                    'Concentration', 'Sample Amount (ng)',
                    'LC Used', 'MS Used']
