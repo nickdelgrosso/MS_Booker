@@ -33,6 +33,7 @@ def render_templated_tex(tex, **options):
         autoescape=False,
         loader=jinja2.BaseLoader()
     )
+    env.globals.update(zip=zip)
     template = env.from_string(tex)
     rendered_tex = template.render(**options)
     return rendered_tex

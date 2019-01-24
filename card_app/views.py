@@ -31,7 +31,10 @@ def upload():
         filename=filename, csv_data=csv_data, method_filename=method_filename, method_data=method_data,
     )
 
-    post_fields = ['Tip Box', 'Concentration Measurement Method', 'Measured Concentration', 'Predicted Sample Amount (ng)', 'LC Used', 'MS Used']
+    post_fields = ['Tip Box', '',
+                   'Concentration Measurement Method', '',
+                   'Concentration', 'Sample Amount (ng)',
+                   'LC Used', 'MS Used']
 
     tex = latex.render_templated_tex(template_tex, Sequence=sequence, PostFields=post_fields)
     fig = utils.plot_gradient(sequence.gradient)

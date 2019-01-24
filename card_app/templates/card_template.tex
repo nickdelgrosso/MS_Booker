@@ -63,10 +63,14 @@
 	}
 
 	\adjustbox{minipage=\linewidth}{
-		\begin{tabular}{|p{.8\textwidth}|}
+		\begin{tabular}{|p{.4\textwidth}|p{.4\textwidth}|}
 			\hline
-			\BLOCK{for Field in PostFields}
-				\color{lightgray}{\VAR{Field}}\\
+			\BLOCK{for Field, Field2 in zip(PostFields[::2], PostFields[1::2])}
+				\BLOCK{if Field2}
+					\color{lightgray}{\VAR{Field}} & \color{lightgray}{\VAR{Field2}}\\
+				\BLOCK{else}
+					\multicolumn{2}{|c|}{\color{lightgray}{\VAR{Field}}}\\[5pt]
+				\BLOCK{endif}
 				\hline
 			\BLOCK{endfor}
 		\end{tabular}
