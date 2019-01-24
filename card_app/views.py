@@ -47,7 +47,7 @@ def upload():
 def download_example():
     f = BytesIO()
     with zipfile.ZipFile(f, mode='w') as zip:
-        zip.write(path.join(app.root_path, 'data', 'test.csv'), arcname='test.csv')
+        zip.write(path.join(app.root_path, 'data', 'test_sequence.csv'), arcname='test_sequence.csv')
         zip.write(path.join(app.root_path, 'data', 'test.meth'), arcname='test.meth')
     f.seek(0)
 

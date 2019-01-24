@@ -41,7 +41,7 @@
 	\rule{\textwidth}{.3mm}
 
     \begin{center}
-        \textbf{\VAR{Sequence.filename}}
+        \textbf{\VAR{Sequence.filename.replace('_', '\_')}}
     \end{center}
 	\adjustbox{minipage=\linewidth}{
 		\begin{tabular}{rl}
@@ -55,7 +55,7 @@
 	}\\
 
     \begin{center}
-        \textbf{\VAR{Sequence.method_filename}}
+        \textbf{\VAR{Sequence.method_filename.replace('_', '\_')}}
     \end{center}
 	\adjustbox{minipage=\linewidth}{
 		\tiny{\VAR{''.join(Sequence.lc_settings.to_latex(bold_rows=True, column_format='rccc', na_rep='', index_names=False).rsplit('\n', maxsplit=2))}}
