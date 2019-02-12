@@ -35,11 +35,9 @@
 	\noindent
 	\adjustbox{minipage=\linewidth}{
 		\Huge{\textbf{\VAR{Sequence.comments.Researcher}}} \hfill \normalsize{\VAR{Sequence.batch_id}}\\
-		\noindent\Large{\VAR{Sequence.comments.Project}}\normalsize\\
+		\noindent\Large{\VAR{Sequence.comments.Project | replace("_", "\_")}}\normalsize\\
 
 	}
-	\rule{\textwidth}{.3mm}
-
     \begin{center}
         \textbf{\VAR{Sequence.filename.replace('_', '\_')}}
     \end{center}
@@ -53,7 +51,6 @@
 		\end{tabular}
         \normalsize
 	}\\
-    \rule{\textwidth}{.3mm}
 
     \begin{center}
         \textbf{\VAR{Sequence.method_filename.replace('_', '\_')}}
@@ -102,8 +99,8 @@
 				\BLOCK{else}
 	[fill=white!40!white, draw=black]
 				\BLOCK{endif}
-	rectangle (0.8cm,0.9em) node[pos=.5] {\VAR{sample.Position}};
-			\BLOCK{if loop.index % 10 == 0}
+	rectangle (0.5cm,0.9em) node[pos=.5] {};
+			\BLOCK{if loop.index % 15 == 0}
 				\vspace{0.5mm}\\
 			\BLOCK{endif}
 		\BLOCK{endfor}

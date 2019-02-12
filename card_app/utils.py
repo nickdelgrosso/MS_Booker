@@ -13,3 +13,4 @@ def plot_gradient(gradient, x_labelsize=20, y_labelsize=30):
     plt.ylim([0, 100])
     plt.ylabel('Percent B')
     return fig
+
