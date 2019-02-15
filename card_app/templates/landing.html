@@ -89,6 +89,14 @@
 
                     </div>
 
+                {% with messages = get_flashed_messages() %}
+                    {% for message in messages %}
+                        <div class="notification is-warning">
+                          {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endwith %}
+
 
                     <br>
 

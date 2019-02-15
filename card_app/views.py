@@ -2,7 +2,7 @@ from os import path
 from io import BytesIO
 from datetime import datetime
 import zipfile
-from flask import render_template, request, make_response
+from flask import render_template, request, make_response, redirect, url_for, flash, get_flashed_messages
 from . import latex
 from . import app
 from . import utils
@@ -14,6 +14,7 @@ cleaning_template_file = path.join(app.root_path, 'templates', 'cleaning_card_te
 
 
 @app.route('/')
+@app.route('/index')
 def index():
     cleaning_form = CleaningForm()
     return render_template('landing.html', cleaning_form=cleaning_form)
@@ -73,3 +74,11 @@ def upload_cleaning_card():
     response.headers['Content-Disposition'] = "inline; filename='cleaning.pdf"
     response.mimetype = 'application/pdf'
     return response
+
+
+@app.errorhandler(500)
+@app.errorhandler(400)
+@app.errorhandler(404)
+def page_not_found(e):
+    flash('Error found.')
+    return redirect(url_for('index'))
