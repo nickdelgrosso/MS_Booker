@@ -5,6 +5,13 @@ from io import BytesIO
 import pandas as pd
 from XCaliburMethodReader import load_lc_data, get_lc_gradient, get_lc_settings
 
+class MethodFileError(Exception):
+    pass
+
+class SequenceFileError(Exception):
+    pass
+
+
 @attr.s
 class Sequence:
     filename: str = attr.ib()
@@ -23,9 +30,40 @@ class Sequence:
         df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
         date = datetime.now()
 
-        lc_data = load_lc_data(BytesIO(method_data))
-        lc_settings = get_lc_settings(lc_data)
-        gradient = get_lc_gradient(lc_data)
+        try:
+            lc_data = load_lc_data(BytesIO(method_data))
+        except:
+            raise MethodFileError("No LC Data Found.")
+
+        try:
+            lc_settings = get_lc_settings(lc_data)
+        except:
+            raise MethodFileError("LC Parameters (Valume, Flow, MaxPressure, etc) not found.")
+
+        try:
+            gradient = get_lc_gradient(lc_data)
+        except:
+            raise MethodFileError("LC Gradient Information not found.")
+
+        try:
+            comment_text = df['Comment'][0]
+        except KeyError:
+            raise SequenceFileError("'Comment' Column not found.")
+
+
+        comment_list = comment_text.split(',')
+        if len(comment_list) == 1:
+            raise SequenceFileError("No commas found between key-value pairs in 'Comment' column.")
+
+        comments = {}
+        for item in comment_list:
+            try:
+                keyval = [el.strip() for el in item.split(':')]
+                if len(keyval) > 2:
+                    raise SequenceFileError("No comma found after key-value '{}' variable in 'Comment' column.".format(keyval[0]))
+                comments[keyval[0]] = keyval[1]
+            except IndexError:
+                raise SequenceFileError("'No colon (':') separator found seperateing the '{}' entry in the 'Comment' column.".format(keyval[0]))
 
         sequence = cls(
             filename=filename,
@@ -33,7 +71,7 @@ class Sequence:
             date=date,
             lc_settings=lc_settings,
             gradient=gradient,
-            comments=dict([el.strip() for el in item.split(':')] for item in df['Comment'][0].split(',')),
+            comments=comments,
             samples=[row for _, row in df.iterrows()],
             table=df,
         )

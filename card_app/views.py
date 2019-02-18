@@ -7,7 +7,7 @@ from . import latex
 from . import app
 from . import utils
 from .forms import CleaningForm
-from .models import Sequence
+from .models import Sequence, SequenceFileError, MethodFileError
 
 template_file = path.join(app.root_path, 'templates', 'card_template.tex')
 cleaning_template_file = path.join(app.root_path, 'templates', 'cleaning_card_template.tex')
@@ -28,9 +28,13 @@ def upload():
     with open(template_file) as f:
         template_tex = f.read()
 
-    sequence = Sequence.from_xcalibur_csv_and_method(
-        filename=filename, csv_data=csv_data, method_filename=method_filename, method_data=method_data,
-    )
+    try:
+        sequence = Sequence.from_xcalibur_csv_and_method(
+            filename=filename, csv_data=csv_data, method_filename=method_filename, method_data=method_data,
+        )
+    except (SequenceFileError, MethodFileError) as e:
+        flash("{}: {}".format(type(e).__name__, e.args[0]))
+        return redirect(url_for('index'))
 
     post_fields = ['Tip Box Name', '',  # Putting a space will make a double-width column
                    'Concentration Measurement Method', '',
@@ -80,5 +84,4 @@ def upload_cleaning_card():
 @app.errorhandler(400)
 @app.errorhandler(404)
 def page_not_found(e):
-    flash('Error found.')
     return redirect(url_for('index'))
