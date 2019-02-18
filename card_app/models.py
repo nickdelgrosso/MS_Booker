@@ -45,6 +45,9 @@ class Sequence:
         except:
             raise MethodFileError("LC Gradient Information not found.")
 
+        if df['Comment'].nunique() > 1:
+            raise SequenceFileError("'Different Project variables found in 'Comment' Column. The text under 'Comment' for all samples must be identical in a batch.")
+
         try:
             comment_text = df['Comment'][0]
         except KeyError:
