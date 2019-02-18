@@ -33,7 +33,7 @@ def upload():
             filename=filename, csv_data=csv_data, method_filename=method_filename, method_data=method_data,
         )
     except (SequenceFileError, MethodFileError) as e:
-        flash("{}: {}".format(type(e).__name__, e.args[0]))
+        flash("{}: {}\nPlease submit a new file and generate the pdf again.".format(type(e).__name__, e.args[0]))
         return redirect(url_for('index'))
 
     post_fields = ['Tip Box Name', '',  # Putting a space will make a double-width column
