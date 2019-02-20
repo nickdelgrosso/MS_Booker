@@ -30,6 +30,7 @@ class Sequence:
         df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
         date = datetime.now()
 
+
         try:
             lc_data = load_lc_data(BytesIO(method_data))
         except:
@@ -45,8 +46,12 @@ class Sequence:
         except:
             raise MethodFileError("LC Gradient Information not found.")
 
-        if df['Comment'].nunique() > 1:
-            raise SequenceFileError("'Different Project variables found in 'Comment' Column. The text under 'Comment' for all samples must be identical in a batch.")
+        if df['Comment'].hasnans or not df['Comment'].str.strip().apply(len):
+            raise SequenceFileError("Missing Data found in Comment column.  All Comment column must contain Project variables, all of them identical.")
+
+        if df['Comment'].str.strip().nunique() > 1:
+            raise SequenceFileError("Different Project variables found in 'Comment' Column. The text under 'Comment' for all samples must be identical in a batch.")
+
 
         try:
             comment_text = df['Comment'][0]

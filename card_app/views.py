@@ -35,6 +35,8 @@ def upload():
     except (SequenceFileError, MethodFileError) as e:
         flash("{}: {}\nPlease submit a new file and generate the pdf again.".format(type(e).__name__, e.args[0]))
         return redirect(url_for('index'))
+    except Exception as e:
+        flash("Unexpected Error: {}: {}.".format(type(e).__name__, e.args[0]))
 
     post_fields = ['Tip Box Name', '',  # Putting a space will make a double-width column
                    'Concentration Measurement Method', '',
@@ -84,4 +86,5 @@ def upload_cleaning_card():
 @app.errorhandler(400)
 @app.errorhandler(404)
 def page_not_found(e):
+    flash(str(e))
     return redirect(url_for('index'))
