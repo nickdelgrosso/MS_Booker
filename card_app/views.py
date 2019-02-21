@@ -28,15 +28,16 @@ def upload():
     with open(template_file) as f:
         template_tex = f.read()
 
-    try:
-        sequence = Sequence.from_xcalibur_csv_and_method(
-            filename=filename, csv_data=csv_data, method_filename=method_filename, method_data=method_data,
-        )
-    except (SequenceFileError, MethodFileError) as e:
-        flash("{}: {}\nPlease submit a new file and generate the pdf again.".format(type(e).__name__, e.args[0]))
-        return redirect(url_for('index'))
-    except Exception as e:
-        flash("Unexpected Error: {}: {}.".format(type(e).__name__, e.args[0]))
+    # try:
+    sequence = Sequence.from_xcalibur_csv_and_method(
+        filename=filename, csv_data=csv_data, method_filename=method_filename, method_data=method_data,
+    )
+    # except (SequenceFileError, MethodFileError) as e:
+    #     flash("{}: {}\nPlease submit a new file and generate the pdf again.".format(type(e).__name__, e.args[0]))
+    #     return redirect(url_for('index'))
+    # except Exception as e:
+    #     flash("Unexpected Error: {}: {}.".format(type(e).__name__, e.args[0]))
+    #     return redirect(url_for('index'))
 
     post_fields = ['Tip Box Name', '',  # Putting a space will make a double-width column
                    'Concentration Measurement Method', '',

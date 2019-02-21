@@ -46,7 +46,7 @@ class Sequence:
         except:
             raise MethodFileError("LC Gradient Information not found.")
 
-        if df['Comment'].hasnans or not df['Comment'].str.strip().apply(len):
+        if df['Comment'].hasnans or not all(df['Comment'].str.strip().apply(len)):
             raise SequenceFileError("Missing Data found in Comment column.  All Comment column must contain Project variables, all of them identical.")
 
         if df['Comment'].str.strip().nunique() > 1:
