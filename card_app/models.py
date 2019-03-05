@@ -1,7 +1,7 @@
 import attr
 from datetime import datetime
 from uuid import uuid4
-from io import BytesIO
+from io import BytesIO, StringIO
 import pandas as pd
 from XCaliburMethodReader import load_lc_data, get_lc_gradient, get_lc_settings
 
@@ -27,7 +27,7 @@ class Sequence:
     @classmethod
     def from_xcalibur_csv_and_method(cls, filename, csv_data, method_filename, method_data):
         """Returns Sequence from csv string data."""
-        df = pd.read_csv(BytesIO(csv_data), skiprows=[0])
+        df = pd.read_csv(StringIO(csv_data.decode('utf-8')), skiprows=[0])
         date = datetime.now()
 
 
