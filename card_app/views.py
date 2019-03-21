@@ -50,8 +50,7 @@ def upload():
         flash("ProjectID missing from Comments column. Please submit a new file with a valid ProjectID and generate the pdf again.")
         return redirect(url_for('index'))
     if project_id not in registered_project_ids:
-        flash('ProjectID {} not found in Project Database. Please get a project id by filling out the registration form on the project database (link above).')
-        flash(str(registered_project_ids))
+        flash('ProjectID {} not found in Project Database. Please get a project id by filling out the registration form on the project database (link above).'.format(project_id))
         return redirect(url_for('index'))
 
     post_fields = ['Tip Box Name', '',  # Putting a space will make a double-width column
