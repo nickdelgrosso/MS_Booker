@@ -7,3 +7,4 @@ XCaliburMethodReader
 matplotlib
 Flask-WTF
 attrs
+requests
