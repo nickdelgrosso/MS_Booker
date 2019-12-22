@@ -1,6 +1,9 @@
 # MS_Booker
 A simple web app for booking mass spec machines
 
+Now it has a webpage!  Go to https://nickdelgrosso.github.io/MS_Booker/ to see this readme in more detail. 
+
+![Kanban](https://kanbanize.com/blog/wp-content/uploads/2018/09/Spotify-Kanban-IT-operations-board.png)
 
 ## Installation
 
